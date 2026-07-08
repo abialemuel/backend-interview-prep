@@ -1,0 +1,14 @@
+# GitHub Actions
+
+GitHub Actions is GitHub's built-in CI/CD platform. Workflows are YAML files in `.github/workflows/` that trigger on repository events (push, pull request, schedule, manual dispatch) and run jobs on runners — either GitHub-hosted VMs or your own self-hosted machines. Each job is a sequence of steps that either run shell commands or invoke reusable **actions**. It is the natural CI/CD choice for repositories already on GitHub and has become the default for new projects.
+
+This directory covers the workflow model and the CI/CD patterns most relevant to backend interviews.
+
+Sub-files:
+
+| File | Topic |
+| --- | --- |
+| `01-workflows-and-ci-cd.md` | Workflow syntax, jobs/steps, runners, secrets, OIDC, caching, reusable workflows, composite actions, security |
+| `02-interview-questions.md` | Graded interview questions with model answers |
+
+Suggested reading order: read the workflows reference first (the syntax and security material are tightly coupled), then attempt the questions and revisit sections as gaps surface.
