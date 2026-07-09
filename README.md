@@ -1,13 +1,13 @@
 # Backend Interview Prep
 
-A structured, categorized study repository for backend engineering interviews. Covers the stack: **PHP & Go** (languages), **Laravel & Next.js** (frameworks), **MySQL & Redis** (databases), and **AWS, Terraform, Ansible, GitHub Actions, Datadog** (infrastructure/DevOps). Plus system design, DSA, and behavioral prep.
+A structured, categorized study repository for backend engineering interviews. Covers languages, frameworks, databases, infrastructure/DevOps, plus system design, DSA, and behavioral prep. Build a reusable, technology-agnostic foundation you can adapt to whatever stack you work with.
 
 Each topic is organized into:
 - **Core concepts** — the fundamentals you must understand
 - **Deep dives** — advanced patterns, internals, and best practices
 - **Interview questions** — Q&A with model answers to self-test
 
-> Last reviewed against current stable releases: **PHP 8.5** (Nov 2025), **Go 1.26** (Feb 2026), **Laravel 12.x**, **Next.js 15**, **Terraform 1.10 / OpenTofu**, **Ansible core 2.18**, **Redis 7.4**, **MySQL 8.4**.
+> Content is kept current against the latest stable releases of each tool covered in the topic folders. Always cross-check the official docs for the latest before an interview.
 
 ---
 
