@@ -10,3 +10,7 @@ Thumbs.db
 
 # Personal progress tracker (optional, keep local)
 PROGRESS.md
+
+# MkDocs build output
+site/
+.cache/
