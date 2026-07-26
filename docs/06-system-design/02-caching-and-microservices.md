@@ -287,6 +287,51 @@ COMMIT;
 
 Side benefits: you get an event log for free, you can replay, and you avoid dual-write consistency bugs entirely. Industry standard. Implementation details (CDC with Debezium, outbox table hygiene, ordering across the relay) are in [`../10-messaging-and-event-streaming/03-event-driven-patterns.md`](../10-messaging-and-event-streaming/03-event-driven-patterns.md).
 
+### Worked example: outbox with SQS
+
+The pattern is broker-agnostic, but SQS is a common target in an AWS shop and has its own sharp edges worth knowing cold — this is a frequent AWS-adjacent system-design deep dive.
+
+```
+BEGIN;
+UPDATE orders SET status = 'CONFIRMED' WHERE id = ?;
+INSERT INTO outbox(event_id, message_group, payload, created_at)
+  VALUES (?, 'order-42', '{"type":"OrderConfirmed","orderId":42,...}', now());
+COMMIT;
+```
+
+A relay (a small poller, or a Lambda triggered on a schedule) selects unpublished outbox rows and calls `SendMessage` / `SendMessageBatch` against SQS, then marks each row published only after SQS confirms receipt:
+
+```
+rows := db.Query("SELECT id, payload FROM outbox WHERE published_at IS NULL ORDER BY created_at LIMIT 10 FOR UPDATE SKIP LOCKED")
+for _, row := range rows {
+    out, err := sqs.SendMessage(ctx, &sqs.SendMessageInput{
+        QueueUrl:               queueURL,
+        MessageBody:            row.Payload,
+        MessageDeduplicationId: aws.String(row.EventID), // FIFO only
+        MessageGroupId:         aws.String(row.MessageGroup), // FIFO only
+    })
+    if err == nil {
+        db.Exec("UPDATE outbox SET published_at = now() WHERE id = ?", row.ID)
+    }
+    // on error: leave unpublished, next poll retries — at-least-once by construction
+}
+```
+
+`FOR UPDATE SKIP LOCKED` lets multiple relay instances poll the same table concurrently without double-publishing the same row (each locks and skips rows another worker already grabbed). This is the horizontal-scaling answer when the interviewer asks "what if the relay itself is the bottleneck?"
+
+The decision that actually gets probed: **standard queue or FIFO?**
+
+| | Standard SQS | FIFO SQS |
+|---|---|---|
+| Ordering | Best-effort, not guaranteed | Guaranteed within a `MessageGroupId` |
+| Duplicates | Possible (at-least-once, no dedup) | Deduplicated for 5 min via `MessageDeduplicationId` |
+| Throughput | Nearly unlimited | 3,000 msg/s per group with batching (300 without) |
+| When to pick | Independent events, consumer is idempotent and order-tolerant | Events that must apply in order per entity — e.g. `OrderCreated` before `OrderShipped` for the *same* order |
+
+The outbox's `event_id` is the natural `MessageDeduplicationId`, and the aggregate ID (`order-42`) is the natural `MessageGroupId` — this is exactly why the outbox row shape above carries both. But FIFO dedup is a 5-minute window, not forever: if the relay retries the same row six minutes after a transient failure, SQS will accept it as a new message. The dedup ID buys you a safety net for the common case (fast retries), not a substitute for an idempotent consumer. The consumer side still needs its own dedup — an `inbox` table keyed by `event_id` with a unique constraint — because "at-least-once, mostly deduplicated" is not the same guarantee as "exactly-once."
+
+One more AWS-specific gotcha worth naming unprompted: SQS has no native fan-out to multiple consumers — one message is deleted once one consumer acks it. If two services (say, billing and analytics) both need `OrderConfirmed`, publish to an SNS topic and fan out to one SQS queue per subscriber (the classic **SNS+SQS fan-out** pattern), rather than trying to make one queue serve two independent consumer groups. This is the SQS equivalent of Kafka consumer groups — see [`../10-messaging-and-event-streaming/01-messaging-fundamentals.md`](../10-messaging-and-event-streaming/01-messaging-fundamentals.md) for the broker-comparison table if the interviewer pushes into "why not just use Kafka here?" Visibility timeout mechanics, DLQ redrive, SNS filter policies, and EventBridge content-based routing get the full deep dive in [`../10-messaging-and-event-streaming/04-aws-messaging-sqs-sns-eventbridge.md`](../10-messaging-and-event-streaming/04-aws-messaging-sqs-sns-eventbridge.md).
+
 ## API gateway and BFF
 
 - **API gateway** is the single front door for external clients, sitting at the edge: TLS termination, authentication, rate limiting, request routing, response composition, response caching, transformation. Examples: Kong, AWS API Gateway, NGINX, Envoy.

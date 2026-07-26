@@ -235,11 +235,57 @@ per workload, not per fashion. If the honest requirement is "a queue for
 jobs," Kafka is overkill; if it's "the history of what happened, consumable by
 teams I haven't met," only a log does that.
 
+### Q14: Walk through SQS visibility timeout and dead-letter queues. What breaks if the timeout is misconfigured?
+
+**Answer:** SQS doesn't delete a message on delivery — it hides it from other
+consumers for the visibility timeout (default 30s) and expects the consumer
+to call `DeleteMessage` after successful processing. If the timeout expires
+first, the message reappears and another consumer can pick it up. Two
+opposite failure modes come from getting this wrong: a timeout shorter than
+actual processing time causes the queue itself to create duplicates — the
+message becomes visible again and gets processed a second time while the
+first attempt is still legitimately running, no network failure involved,
+just bad configuration; a timeout that's too long means a genuinely failed
+message sits invisible and unretried for the whole window, inflating
+recovery latency. The fix for variable-length work is to heartbeat —
+extend the timeout mid-processing with `ChangeMessageVisibility` — rather
+than just setting a large fixed value. The dead-letter queue is the backstop
+for messages that keep failing: a `RedrivePolicy` with `maxReceiveCount`
+moves a message to the DLQ after that many failed receive attempts instead of
+redelivering it forever, which is the managed version of poison-message
+handling. The part people forget: the DLQ is a normal queue that nothing
+drains automatically, so without alerting on its depth, messages die there
+silently until a customer notices. `StartMessageMoveTask` lets you redrive
+DLQ messages back to the source queue once the underlying bug is fixed,
+without hand-rolling that plumbing.
+
+### Q15: A single domain event needs to reach three independent consumer teams on AWS, and one of them only cares about high-value orders. How do you design the fan-out?
+
+**Answer:** SQS alone can't do this — one message is deleted once one
+consumer acks it, so a lone queue can't serve three independent teams. The
+standard shape is publish-once, fan-out-many: the producer publishes to an
+SNS topic, and each team subscribes its own SQS queue to that topic. Each
+subscriber now has a durable, independently-consumed, independently-scaled
+copy of every message, with its own DLQ if it falls behind or fails — this is
+SNS+SQS's answer to what Kafka's consumer groups get for free from a
+partitioned log. For the team that only wants high-value orders, two options
+depending on how the filter needs to work: an SNS filter policy on message
+*attributes* if "high-value" is a flag the producer already sets at publish
+time (simplest — SNS just won't deliver non-matching messages to that
+subscription); or EventBridge if the filter needs to inspect the event's
+actual content (nested fields, numeric thresholds like `amount > 10000`,
+`anything-but` exclusions) rather than a pre-set attribute — EventBridge
+rules match on the payload itself, which is the more common shape for
+"route by business meaning" rather than "route by a flag someone remembered
+to set." The trap to name unprompted: reaching for EventBridge everywhere
+"to be flexible" adds a moving part that isn't free when a plain SNS filter
+policy already covers the actual requirement.
+
 ---
 
 ## Staff
 
-### Q14: Design order processing where the customer is charged exactly once, end to end.
+### Q16: Design order processing where the customer is charged exactly once, end to end.
 
 **Answer:** Start by naming the truth: the payment gateway is an external
 system, so no broker transaction can span it — "exactly-once" must be
@@ -268,7 +314,7 @@ deliberately *not* the centerpiece: they cover Kafka-to-Kafka hops only; here
 the correctness lives in the outbox, the inbox, and the gateway idempotency
 key.
 
-### Q15: Your CDC pipeline streams table changes to other teams, and a schema migration just broke three downstream consumers. What went wrong architecturally, and how do you fix it?
+### Q17: Your CDC pipeline streams table changes to other teams, and a schema migration just broke three downstream consumers. What went wrong architecturally, and how do you fix it?
 
 **Answer:** The architecture leaked a private interface: raw CDC events are
 the *table's* shape, so every consumer was silently coupled to the internal
@@ -291,7 +337,7 @@ are. The tell of a mature answer is stating the general principle: CDC is
 excellent plumbing for data movement, but *contracts* should be domain events
 you design, not schemas you happen to have.
 
-### Q16: When is event sourcing worth it, and what goes wrong in practice?
+### Q18: When is event sourcing worth it, and what goes wrong in practice?
 
 **Answer:** Worth it when the history *is* the business value: financial
 ledgers and anything auditable ("prove how this balance arose"), domains with
@@ -314,7 +360,7 @@ and permanent retention. My honest default: plain state + outbox events covers
 90% of systems; event-source the specific aggregates where audit or
 temporality is a first-class requirement, and be able to defend that line.
 
-### Q17: The same Kafka event was processed twice, three weeks after the code shipped. Walk me through where duplicates come from and how you'd close the gap.
+### Q19: The same Kafka event was processed twice, three weeks after the code shipped. Walk me through where duplicates come from and how you'd close the gap.
 
 **Answer:** First, the priors: at-least-once systems *will* duplicate; the bug
 is almost never "Kafka broke" but "we assumed it wouldn't." Sources, producer
@@ -339,7 +385,7 @@ that makes it staff-level: this should have been caught by design review —
 must answer before shipping, and a duplicate-injection test (replay staging
 traffic) is cheap insurance.
 
-### Q18: You're migrating a monolith to event-driven microservices. What's your messaging strategy, and what failure modes do you guard against from day one?
+### Q20: You're migrating a monolith to event-driven microservices. What's your messaging strategy, and what failure modes do you guard against from day one?
 
 **Answer:** Strategy: strangler fig, events first. (1) Stand up the backbone
 (managed Kafka unless there's a reason not to) and start publishing domain
