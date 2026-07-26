@@ -10,8 +10,9 @@ Backend interviews consistently test Data Structures & Algorithms (DSA) — not 
 
 ## How to use this section
 
-1. Learn the patterns in `01-common-patterns.md`. Most interview problems are a recognizable pattern plus one twist. Pattern recognition gets you 70% of the way.
-2. Drill the problem set in `02-interview-questions.md`. Each problem lists the pattern, an approach sketch, and a tiny I/O example. Try the problem first, then read the approach to check your thinking.
+1. Get the structures themselves cold in `01-data-structures-fundamentals.md` — arrays, linked lists, stacks/queues, hash tables, trees, heaps, graphs, each with Big-O and the canonical problems that recur across every company (reverse a linked list, LRU cache, valid parentheses, and the rest). You cannot pattern-match your way through a pointer-manipulation bug; this has to be automatic.
+2. Learn the patterns in `02-common-patterns.md`. Most interview problems are a recognizable pattern plus one twist, built on top of the structures from file 01. Pattern recognition gets you 70% of the way.
+3. Drill the problem set in `03-interview-questions.md`. Each problem lists the pattern, an approach sketch, and a tiny I/O example. Try the problem first, then read the approach to check your thinking.
 3. Practice in timed conditions (30-45 min per medium/hard) with a real code editor. Talk through your reasoning out loud.
 
 ## Coding interviews in the AI era (2026 reality)
@@ -65,7 +66,7 @@ Most languages' built-in sort is a hybrid (Timsort for Python/Java, pdqsort for 
   - Start with the NeetCode 150 / LeetCode 75 curated lists; they cover every pattern above with canonical problems.
   - Prioritize Medium problems over Easy (interview-realistic) and over Hard (diminishing returns).
   - Do at least 10-15 Array/Hashing, 5-10 Tree/Graph, 5 Heap, 5 DP, 5 Two-Pointer/Sliding-Window.
-- **NeetCode** (neetcode.io) — free pattern-organized roadmap with video explanations. Best structured resource for the patterns in `01-common-patterns.md`.
+- **NeetCode** (neetcode.io) — free pattern-organized roadmap with video explanations. Best structured resource for the patterns in `02-common-patterns.md`.
 - **"Elements of Programming Interviews"** (Adnan Aziz et al.) — higher signal per problem than LeetCode random; works through patterns deliberately. There is a Go/C++/Java/Python edition.
 - **"Cracking the Coding Interview"** (McDowell) — gentler intro, good if you've been away from DSA for years.
 - **AlgorithmFridays / algorithms.wtf** — written by a competitive programmer, rigorous on correctness and complexity; good for the harder graph/DP problems.
@@ -77,5 +78,6 @@ Most languages' built-in sort is a hybrid (Timsort for Python/Java, pdqsort for 
 | File | Contents |
 |------|----------|
 | `README.md` | This file — overview, Big-O cheat sheet, resources. |
-| `01-common-patterns.md` | The recurring interview patterns, with recognition cues, core idea, complexity, and a canonical problem each. |
-| `02-interview-questions.md` | 20+ canonical backend-interview problems grouped by difficulty, with approach sketches and I/O examples. |
+| `01-data-structures-fundamentals.md` | Structure-by-structure: arrays/strings, linked lists, stacks/queues, hash tables, trees, heaps, graphs — concept, Big-O, and the canonical problems that recur on nearly every coding screen. |
+| `02-common-patterns.md` | The recurring interview patterns, with recognition cues, core idea, complexity, and a canonical problem each. |
+| `03-interview-questions.md` | 20+ canonical backend-interview problems grouped by difficulty, with approach sketches and I/O examples. |
