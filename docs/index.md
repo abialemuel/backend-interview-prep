@@ -29,6 +29,7 @@ Each topic is organized into:
 | [Security & Auth](12-security-and-auth/README.md) | Sessions, JWT, OAuth2/OIDC, OWASP, passkeys |
 | [Distributed Systems](13-distributed-systems/README.md) | Consensus, replication, clocks, correctness in practice |
 | [AI & LLM Integration](14-ai-llm-integration/README.md) | LLM APIs, RAG, vector search, LLMs in production |
+| [SRE / Observability Role Prep](15-sre-observability-role/README.md) | JD-mapped prep: Datadog admin, K8s/AWS/CI-CD observability integration, Python ops scripting |
 
 ## Keeping content current
 
