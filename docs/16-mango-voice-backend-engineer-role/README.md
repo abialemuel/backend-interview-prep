@@ -210,7 +210,27 @@ Graded roughly junior → senior; the senior-tier and VoIP/AI-specific ones are 
 17. How would you design SMS delivery-receipt handling so a burst of DLR webhooks doesn't create duplicate state updates?
 18. What's your first-90-days plan for ramping up on a telephony domain you've never worked in before, while still shipping?
 
-## 7. Logistics — questions worth asking them directly
+## 7. Questions worth asking them directly
+
+The questions that land best here don't just gather information — they show the interviewer you've already been thinking about the domain's actual hard problems, not just its buzzwords. Each one below is grounded in a fact from Section 0, not a generic "what's the tech stack" ask.
+
+### 7.1 Technical & architecture — show you're already thinking about their hardest problems
+
+- Does Margo run as a single LLM-driven agent per call, or does it orchestrate multiple specialized agents/tools behind the scenes (intent classification, PMS lookup, scheduling, escalation-decision)? Given the "workflow intelligence" line in the 2026+ roadmap, is multi-agent orchestration (LangGraph-style state machines) a direction you're actively moving toward, or does a single-agent-with-tools model hold up fine at current scale? — signals real interest in the system's depth rather than "you use LLMs," and tells you on the spot which half of Section 3.5's material actually matters here.
+- How do you test and evaluate AI features before they ship — is there an eval suite for Margo's conversation quality and Mango AI's summarization accuracy, or is quality tracked more through production monitoring and customer feedback? How do you catch a regression when a prompt changes or the underlying model gets swapped? — the single highest-signal question available: most teams running agentic AI in production are still figuring out testing, and asking it proves you already know that's the hard part, not the LLM call itself.
+- When Mango AI auto-writes a call summary back into a PMS/EHR, what's the safeguard against an LLM hallucination silently corrupting a patient record — a human-review step, a confidence threshold, a diff/audit trail before commit? — ties directly to the HIPAA-plus-write-back architecture in Section 0 and shows you understand the actual risk in that feature, not just its convenience.
+- With 50+ PMS/EHR integration partners, is there a shared internal integration abstraction (one internal event schema, per-partner adapters), or is each integration closer to bespoke? — probes whether the "Integrations" domain work is mostly adapter-writing or platform-building, which changes what the role looks like day to day.
+- Given you own infrastructure across multiple data centers alongside AWS, how do you keep a call's real-time media path separate from the AI/compute path — does audio ever leave your own network before reaching an AI provider, and does that boundary shift under a BAA constraint? — connects the owned-infra fact from Section 0 to the compliance requirement instead of treating them as two unrelated facts.
+- If the underlying LLM provider has an outage or degrades in latency mid-call, what happens to Margo — a fallback to a simpler rules-based flow, or to a human/voicemail? — a reliability question specific to Margo being a live production agent on real calls, not a batch job with retry budget.
+
+### 7.2 Product & business — show you understand what they're actually building toward
+
+- The 2026+ roadmap names "deeper integrations" and "workflow intelligence" as the two directions — which is the bigger near-term engineering investment right now: going deeper on existing PMS/EHR partners, or building more autonomous workflow/agentic behavior on top of what's already integrated? — echoes Section 0's roadmap facts back at them and shows you read past the JD into the company's actual stated direction.
+- How do you measure whether Margo is succeeding on a given call — containment/resolution rate without human handoff, appointment-booking conversion, patient satisfaction, something else — and do engineers see those metrics, or is that purely a product-side view? — signals you think about an AI feature as something with a business KPI attached, not only an engineering deliverable, which reads as more senior.
+- Being bootstrapped with no outside capital, how do engineering priorities actually get decided day to day — support-ticket volume, direct customer requests, an internal roadmap board, something else? — genuinely useful info given Section 0's "customer-driven roadmap" framing, and shows you registered that fact and want to know what it means in practice rather than repeating it back.
+- Across the healthcare verticals you serve (dental, vision, chiropractic, veterinary, etc.), how much does Margo/Mango AI's behavior need to differ per vertical versus behaving identically — configuration-level differences, or real per-vertical engineering work? — connects the "scale across every vertical" roadmap line to a concrete question about multi-tenant AI configuration, exactly the kind of question a senior engineer sizing up the role's real complexity would ask.
+
+### 7.3 Team & role logistics
 
 - The JD says Go is "the primary language" but separately requires 5+ years of TypeScript — what is the TypeScript actually used for on this team (a Node service, an admin frontend, the AI orchestration layer)?
 - Is the "AI-driven features and agentic systems" work greenfield, or is there existing infrastructure (a transcription pipeline, an agent framework already chosen) you'd be building on top of?
