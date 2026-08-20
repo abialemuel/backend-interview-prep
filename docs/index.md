@@ -31,6 +31,7 @@ Each topic is organized into:
 | [AI & LLM Integration](14-ai-llm-integration/README.md) | LLM APIs, RAG, vector search, LLMs in production |
 | [SRE / Observability Role Prep](15-sre-observability-role/README.md) | JD-mapped prep: Datadog admin, K8s/AWS/CI-CD observability integration, Python ops scripting |
 | [Mango Voice / Senior Backend Engineer Prep](16-mango-voice-backend-engineer-role/README.md) | JD-mapped prep: Go/AWS core, VoIP (SIP/RTP/WebRTC), Shape Up, HIPAA, agentic AI for CX/Integrations |
+| [Partly / Senior Software Engineer Prep](17-partly-senior-software-engineer-role/README.md) | JD-mapped prep: auto parts domain (fitment, ACES/PIES, supersessions), Rust, AI confidence/grounding, distributed systems |
 
 ## Keeping content current
 

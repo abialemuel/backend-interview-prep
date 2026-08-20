@@ -1,0 +1,184 @@
+# Partly — Senior Software Engineer, NZ
+
+This section is a targeted prep pack for one specific posting: **Senior Software Engineer, NZ**, on-site Auckland, in Partly's **AI Research & Software Engineering** department. The distinctive shape of this JD: it names almost no specific technology (no language, no cloud provider, no framework) and instead leans entirely on computer-science fundamentals — data structures, concurrency, architecture, APIs, testing, design patterns, distributed systems — plus two bonus signals (automotive parts experience, Rust) that hint at what the stack actually looks like without confirming it. Real interview reports back this up: candidates describe a shift mid-loop from "tell me about your projects" straight into stack-vs-heap, concurrency-vs-parallelism, compiler-vs-interpreter territory. Read this file first — Section 0 gives you the company and product facts, Section 1 decodes the JD, the rest maps to material already in this repo and fills the gaps specific to *this* posting: the auto-parts domain itself, Rust, and how AI-grounding/confidence-scoring shows up in a role that likely builds the platform *around* an AI model rather than the model itself.
+
+## 0. Company snapshot — what Partly actually is
+
+**Read this before anything else.** This is not a car-parts marketplace and not a generic AI startup — it is data-and-AI infrastructure for an industry that still runs on phone calls. Sourced from partly.com, the [Interpreter product page](https://www.partly.com/partly-interpreter), and the press coverage cited inline below.
+
+| Dimension | Fact | Why it matters in the interview |
+| --- | --- | --- |
+| **Founding story** | Founded 2020 in Christchurch, NZ by CEO **Levi Fawcett** (five years as a lead engineer at Rocket Lab) with co-founders including Tony Austin (ex-eBay Europe, helped launch Amazon Australia). The founding insight: roughly 95-98% of auto parts orders happen offline/by phone, versus ~79% average for retail overall — an entire trillion-dollar industry running on human "parts interpreters" reading damage descriptions and translating them into part numbers by ear. [TechCrunch, 2022](https://techcrunch.com/2022/12/12/ex-rocket-lab-engineer-raises-21m-for-partly-to-make-buying-car-parts-easier/); [Icehouse Ventures](https://resources.icehouseventures.co.nz/blog/startup-blueprint-levifawcett). | Frames the whole company: they are digitizing a human expert role, not building a nicer storefront. Your "why Partly" answer should engage with *that*, not with "I like cars." |
+| **What it is** | The AI infrastructure layer for the global repair industry, starting with the ~$2tn automotive market — sold as **infrastructure, not standalone software**, a neutral translation layer that powers marketplaces (eBay, Shopify) and enterprise/dealer systems rather than replacing them. | Changes what "the product" means for you as an engineer: you're building pipes and a data brain other companies' software depends on, not a consumer app. Directly relevant to the "reliable APIs" and "great experience to businesses using the Partly platform" JD lines. |
+| **Interpreter — the core model** | A multimodal foundation model (**text, photo, video, and voice** in; text-token out) purpose-built to reason over vehicle damage and parts, not a fine-tuned general LLM. Now on **version 6**, with the Series B partly funding compute for version 7. Trained on five years of proprietary research, licensed manufacturer data, physical vehicle tear-downs, and reinforcement learning on historical repair data, formalized through **50+ manufacturer agreements**. Self-reports **98.8% parts-list accuracy** in real-world job evaluations, and — the more interesting number — **60% F1 on complex Toyota repair jobs versus 1-5% F1 for GPT-5/Claude Opus 4.8** on the same task, because general models simply lack the fitment-specific training data. [Interpreter product page](https://www.partly.com/partly-interpreter); [Tech Funding News, June 2026](https://techfundingnews.com/partly-banks-50m-led-by-dst-global-at-500m-valuation-to-make-auto-repair-ai-do-what-gpt-5-cant/). | This is the headline "why is this hard" fact to internalize: general-purpose LLMs are close to useless on this task. If a system-design question drifts toward "why not just call GPT-5," you have a concrete, sourced answer. Also note the caveat one independent review raised: these are Partly's own self-published benchmarks, not third-party audited — a sharp thing to be aware of, not necessarily to say unprompted. |
+| **Data assets** | Two proprietary databases: the **Universal Vehicle Database (UVDB)** and the **Global Auto Parts Catalog (GAPC)** — spanning over 50 million catalog parts from 20,000+ suppliers and OEMs (42M parts / 4,000 brands as of 2022, grown since), covering roughly 91% of vehicles across 58 manufacturers. | This *is* the moat, and it's a data-engineering moat as much as a model one — ingesting, structuring, and standardizing wildly inconsistent supplier/OEM data at that scale is a real distributed-systems and data-modeling problem, independent of the AI layer. |
+| **Product portfolio** | APIs (vehicle lookup/fitment/parts-data for developers and marketplaces), **Partly AI** (partly.ai — collision-shop estimating from images/voice, basket building, order validation), **PartsPal** (catalog management + fitment sync to eBay/Shopify), enterprise/OEM integrations, and a Shopify app ("PartBot"). | Name at least two of these by name in interview — it signals you understood the platform has multiple customer-facing surfaces built on the same underlying data/AI layer, which is exactly the "core SaaS and API platform" the JD says you'll work on. |
+| **Funding & growth** | $21M Series A (Dec 2022, Europe-focused) → **$50M Series B (June 2026)** led by DST Global (Facebook, Airbnb, Spotify) at a **$500M valuation**, ~$92.4M raised total, immediately followed by a US market expansion and a new Austin HQ. Company has **tripled in size in 18 months** (per the JD) to roughly 160 people. Rocket Lab founder **Peter Beck** is both an investor and adviser. | This is a company mid-scale-up, not steady-state — expect questions probing whether you're comfortable with the ambiguity and pace of a team that just tripled, and a real "what does the next 18 months look like" conversation to have your own questions ready for (Section 7). |
+| **Department context** | This req sits in **"AI Research & Software Engineering"** — read as one combined org covering both model research and the platform engineering around it. The JD's actual day-to-day description (scalable/fault-tolerant APIs, "great experience to businesses using the platform") reads as the **platform/product-engineering side of that department**, not the model-training side — i.e., you are very likely building the systems that serve Interpreter's outputs reliably, not training Interpreter itself. Worth confirming directly (Section 7). | Sets expectations correctly: prep general distributed-systems/API rigor hard, and prep AI/LLM-adjacent material (grounding, confidence scoring, evaluation) as context you should understand and can discuss, not as a claim you'll be doing ML research day one. |
+| **Culture & locations** | HQ Austin, TX; offices in London, Christchurch, and Auckland (K'Road). **Office-first with flexibility** — default in-office in cities where they have one, explicitly to "move faster, make better decisions, build strong relationships," paired with a stated high-trust environment. Quarterly all-hands **"Season Openers"** (flights + accommodation covered) plus an annual global offsite. | This is a real, stated trade-off (speed/cohesion over remote flexibility) — an honest "why Partly" or culture-fit answer should engage with that directly rather than default to praising remote flexibility this role doesn't actually offer (it's on-site). |
+
+## 1. Decoding the JD
+
+| JD phrase | What it really means | Where interviewers probe it |
+| --- | --- | --- |
+| "mission-critical systems for our core SaaS and API platform... highly scalable, fault-tolerant and **accurate**" | Notice "accurate" sitting alongside the usual "scalable, fault-tolerant" pairing — in most SaaS roles that word wouldn't appear. Here it's load-bearing: an available API that returns the *wrong* part is arguably worse than a downed one, because a physical part gets ordered, shipped, and returned. Reliability here means correctness of data as much as uptime. | Section 3.4 and the scenario in Section 4 — expect a design question that explicitly asks how you'd catch a wrong-but-confident answer, not just a slow or failed one. |
+| "an opportunity to become an expert in the extremely complex and underserved auto parts domain" | This is a genuine, hard domain (see Section 3.2) and the JD is honest that you don't need to know it yet — but coming in with even surface fluency in fitment/ACES-PIES/supersessions will visibly differentiate you from other candidates who show up blank on it. | Section 3.2 — the single highest-leverage prep item in this whole pack. |
+| "Firmly grounded computer science and engineering fundamentals, including data structures, concurrency, architecture, APIs, testing, and design patterns" | Read literally, and confirmed by real candidate reports: expect the loop to include stack-vs-heap, concurrency-vs-parallelism, and general CS-fundamentals questions, not just "tell me about a project." | Section 6 — several of these are drawn from actual reported Partly interviews. |
+| "Strong knowledge of databases and data models, relational and NoSQL" | Given the scale of UVDB/GAPC (50M+ parts, tens of thousands of suppliers, wildly inconsistent source formats), this almost certainly means real experience choosing between a normalized relational schema (for canonical fitment/catalog data) and a NoSQL store (for ingesting heterogeneous, semi-structured supplier feeds before they're normalized) — not a generic "know SQL and Mongo" checkbox. | Section 3.6. |
+| "Experience building reliable, distributed systems" | No cloud provider or framework named — this is being tested at the conceptual level (consistency, partitioning, failure modes), not "do you know AWS." | [Distributed Systems](../13-distributed-systems/README.md) — no gap, just depth. |
+| "(Bonus) Experience with automotive parts" | Confirms the domain gap is real and acknowledged — most candidates won't have this, so a little real prep (Section 3.2) goes a long way relative to the baseline. | Section 3.2. |
+| "(Bonus) Experience with Rust" | The one concrete technology hint in the entire JD, and notably it's a *bonus*, not a requirement — suggesting Rust exists somewhere in the stack (plausibly a performance/correctness-critical slice of the data pipeline or Interpreter-serving layer) without the whole platform being Rust. Worth a direct question (Section 7) rather than an assumption. | Section 3.3. |
+| Department: "AI Research & Software Engineering" | See Section 0 — likely platform engineering *around* AI, not model training itself. | Section 7 — ask directly. |
+| No cloud provider, no language, no framework named anywhere in the JD | Unusual for a senior posting at this length — most JDs name a stack. Reads as intentional: they're hiring for engineering judgment that transfers, not for a specific resume keyword match. | Don't over-anchor prep on guessing their stack; prioritize fundamentals (Sections 2 and 6) over stack trivia. |
+
+## 2. Coverage map — what's already in this repo
+
+Read in this order; each links to the file that covers it in depth. This section only covers what's **not** already handled elsewhere.
+
+| JD requirement | Repo coverage | Read this first if... |
+| --- | --- | --- |
+| Data structures, concurrency, general CS fundamentals | [Go](../01-languages/go/README.md) (concurrency model, interfaces/errors — apply the same rigor in whichever language you interview in), [Data Structures Fundamentals](../07-data-structures-algorithms/01-data-structures-fundamentals.md), [Common Patterns](../07-data-structures-algorithms/02-common-patterns.md) | you haven't drilled stack/heap, cycle detection, tree traversal, etc. recently — these are reported as literally asked here |
+| Architecture, API design | [System Design](../06-system-design/README.md), [API Design](../11-api-design/README.md) | you haven't designed a public API contract or reasoned about versioning/pagination before |
+| Testing | [Go — testing and performance](../01-languages/go/04-testing-and-performance.md) | rusty on table-driven tests, benchmarking, or what makes a test suite trustworthy at scale |
+| Design patterns | [Go — interfaces and errors](../01-languages/go/03-interfaces-and-errors.md) for idiomatic Go patterns; general OOP patterns are language-agnostic — be ready to name a few (strategy, decorator, repository, adapter) and where you've used them for real, not from a textbook | you've only seen patterns in a GoF-book context, never applied |
+| Relational + NoSQL data modeling | [MySQL](../03-databases/mysql/README.md), [PostgreSQL](../03-databases/postgresql/README.md), [Redis](../03-databases/redis/README.md) | before Section 3.6 below, which builds the catalog-specific framing on top |
+| Reliable, distributed systems | [Distributed Systems](../13-distributed-systems/README.md) — consensus, replication, correctness in practice | you haven't reasoned about idempotency, retries, or partition tolerance recently |
+| AI grounding / confidence / hallucination control (context for the department, even if you're not training models) | [AI & LLM Integration](../14-ai-llm-integration/README.md) | before Section 3.4 below |
+
+## 3. The gaps — content specific to this posting
+
+### 3.1 Answering "Why Partly?"
+
+Don't lead with "I like cars" or "AI is exciting" — both are generic and don't show you understood the company. Lead with the actual insight: *"What got me is that this is an industry where 95%+ of transactions still happen over the phone, and the reason isn't that nobody's tried to digitize it — it's that the domain is genuinely too complex for a generic system: hundreds of millions of vehicle configurations, supersession chains, assembly hierarchies. That's a real, hard, underserved data-and-AI infrastructure problem, not a thin marketplace wrapper, and that's the kind of problem I want to be building on."* This directly echoes Section 0's founding insight back in your own words and signals you read past the JD.
+
+### 3.2 The auto parts domain crash course
+
+This is the highest-leverage prep in this pack — genuinely underserved territory that almost no generic backend-interview material covers, and exactly what the JD flags as a bonus/growth area.
+
+**Fitment** is the core concept: whether a given part physically and functionally fits a given vehicle. It sounds simple and isn't — the same nominal part (e.g., "front bumper") can differ by **trim level, engine option, production date/model-year cutover, drivetrain (2WD vs 4WD), body style, and market/region**, and a vehicle "matching" on year/make/model can still take a different part. This is precisely why Partly's own materials describe accounting for "trim level, engine type, market, and production date" as the hard part of a VIN-to-parts lookup, and why general-purpose LLMs score near zero on it (Section 0) — there's no way to reason your way to the right answer without the underlying structured data; it has to be looked up, not inferred.
+
+**ACES and PIES** are the aftermarket industry's own data-exchange standards (from the Auto Care Association), and knowing they exist — even at a surface level — is a strong signal:
+- **ACES** (Aftermarket Catalog Exchange Standard) encodes *fitment*: what fits what. An XML-based structure describing the vehicle attributes (year/make/model plus drivetrain, engine, body, etc.) a given part number applies to.
+- **PIES** (Product Information Exchange Standard) encodes *the product itself*: description, dimensions, weight, pricing, images, country of origin — everything about the part number that isn't about what it fits.
+- The one-line summary worth having ready: **"ACES says what a part fits; PIES says what the part is."** Partly's UVDB/GAPC databases are solving essentially this same problem — standardizing fitment and product data — but at a scale and with an AI-comprehension layer (parsing messy real-world text/photos/voice, not just structured catalog feeds) well beyond what ACES/PIES alone provide.
+
+**Supersession** is the other must-know concept: manufacturers periodically discontinue a part number and replace it with a new one — sometimes a straightforward 1:1 replacement, sometimes a **"grouped supersession"** where one old part number splits into multiple new part numbers (e.g., a part that used to cover several trims gets split into trim-specific successors). A catalog or AI system that doesn't track supersession chains will confidently recommend a part number that no longer exists or no longer applies — a very concrete, very real accuracy failure mode, and a great example if asked "what could go wrong" in a design question.
+
+**Assembly hierarchies**: parts nest (a bumper assembly contains brackets, trim clips, sensors, etc.), and a repair job might need the whole assembly or just a sub-part depending on the damage — a classic tree/graph-shaped data modeling problem hiding inside what sounds like a simple parts lookup.
+
+**Repair economics**: a real repair-shop AI recommendation isn't just "which part" — it factors labor time, paint/refinishing cost, and part sourcing cost (OEM vs aftermarket vs used) into what actually gets recommended, which is why Interpreter's stated capabilities explicitly include reasoning over repair economics, not just parts identification.
+
+If asked a design question in this domain, naming fitment ambiguity, supersession, and assembly hierarchy as sources of complexity — unprompted — is the single clearest way to show you did real homework rather than winging a generic "design a product catalog" answer.
+
+### 3.3 Rust — enough to talk about it credibly
+
+Listed as a bonus, not required, and no other language is named in the JD (Section 1) — so the honest position, if you don't know Rust, is to say so plainly and pivot to the underlying trade-off, which you should understand regardless:
+
+- **The core pitch**: memory safety without a garbage collector, via **ownership and borrowing** enforced at compile time (every value has exactly one owner; borrowing rules — either many immutable references or one mutable reference — are checked by the compiler, not at runtime). This eliminates whole classes of memory bugs (use-after-free, data races) that a language like Go or Java would either allow or catch only via a GC/runtime cost.
+- **Why a company might reach for it selectively**: predictable low latency without GC pauses (relevant to a high-throughput data-ingestion or serving pipeline), and safety guarantees for a component where a memory bug would be unusually costly — plausible candidates here being the parts of the stack that touch the largest data volumes (UVDB/GAPC ingestion) or the lowest-latency serving path in front of Interpreter.
+- **The honest trade-off to volunteer if asked "Go vs. Rust"**: Rust has a steeper learning curve and slower initial development velocity in exchange for stronger compile-time guarantees and no GC pause tail latency; Go optimizes for developer velocity and simplicity with a GC that's good enough for the overwhelming majority of services. A senior answer picks based on the specific component's requirements (hard real-time/memory-critical vs. everything else), not a blanket language preference.
+- If you do know Rust: be ready to talk about lifetimes concretely (not just recite the rule), and `Result`/`Option` versus exceptions or Go-style multi-return errors as an error-handling philosophy — a natural bridge from the [Go interfaces/errors material](../01-languages/go/03-interfaces-and-errors.md) you should already know.
+
+### 3.4 AI grounding, confidence scoring, and where "accurate" comes from
+
+Interpreter's stated design explicitly includes **auditability with confidence scoring for each recommendation** — this is worth understanding conceptually even if this specific role sits on the platform-engineering side of "AI Research & Software Engineering" (Section 0) rather than the model-research side, because it directly shapes the "fault-tolerant and accurate" API design theme in Section 1.
+
+The relevant concepts, building on [AI & LLM Integration](../14-ai-llm-integration/README.md): grounding an AI's output in structured, verifiable data (here, the UVDB/GAPC catalog) rather than trusting free-form generation is exactly the RAG-style pattern that section covers — the difference is the retrieval target here is a fitment/parts database instead of a document corpus. **Confidence scoring** as a first-class output (not an afterthought) lets a downstream system decide what to do with a low-confidence answer — auto-approve, flag for human review, or reject outright — which is the same "guardrails treat model output as untrusted input" principle from that section, applied to a domain where the cost of a wrong answer is a physical part getting shipped to the wrong address. If a design question touches "how would you build the API that serves Interpreter's recommendations," naming a confidence threshold and a human-review or fallback path for low-confidence cases is the senior move, not just "call the model and return the answer."
+
+### 3.5 Testing and design patterns — the JD names them explicitly
+
+Unusually for a JD, "testing" and "design patterns" appear as their own named fundamentals rather than implied — treat them as genuinely testable, not boilerplate. On testing: be ready to discuss what makes a test suite trustworthy for a system where *correctness of data*, not just code behavior, is the product (property-based or golden-file/snapshot tests against known-correct fitment data are a natural fit for a catalog-shaped domain, worth mentioning even speculatively). On design patterns: have two or three you've used for a real reason, not recited from a textbook — the repository/adapter pattern for abstracting over inconsistent per-supplier data sources is a natural, honest one to bring up given Section 0's data-ingestion challenge, even if you haven't worked at Partly's specific scale.
+
+### 3.6 Relational vs. NoSQL, for a catalog-shaped domain specifically
+
+The JD's database bullet is generic, but the shape of Partly's actual data problem gives you a concrete way to answer it instead of reciting a textbook comparison: canonical, standardized fitment/catalog data (once normalized) is a strong fit for a relational model — fitment relationships (vehicle attributes → part numbers, supersession chains, assembly hierarchies) are exactly the kind of structured, join-heavy, integrity-constrained data relational databases are built for. The messier problem is *before* normalization: ingesting 20,000+ suppliers' worth of wildly inconsistent source data (different schemas, different fitment vocabularies, different update cadences) — a natural fit for a more schema-flexible NoSQL or document store as a landing zone, with a transformation/normalization pipeline feeding the clean relational (or graph, given the assembly-hierarchy shape) model downstream. If asked to design this, naming that two-stage shape — flexible ingestion, normalized serving store — is a stronger answer than picking one database type for the whole problem.
+
+## 4. Scenario question — design the whole thing end to end
+
+This is the shape of question most likely to appear, combining the domain complexity, the reliability bar, and the AI-adjacent architecture from Sections 3.2–3.4. Practice it out loud before the interview.
+
+> **"Design the API that, given a VIN and a description of vehicle damage, returns the exact parts needed to repair it — accounting for the fact that the same nominal part can differ by trim/engine/production date, that a recommended part number might have been superseded, and that this needs to be both fast and correct at scale."**
+
+A strong answer moves through, in order:
+
+1. **Data model** — a normalized relational (or graph-shaped, for assembly hierarchies) canonical store for fitment and catalog data, fed by an ingestion pipeline that lands heterogeneous supplier data in a more flexible store first and normalizes it downstream (Section 3.6).
+2. **Fitment resolution** — VIN decodes to a vehicle's specific attributes (trim, engine, production date, market), which narrows the fitment lookup — the API's core correctness problem, not an implementation detail.
+3. **AI layer** — the damage description (text/photo/voice) is interpreted and mapped to candidate parts via the AI model, returned with a **confidence score** (Section 3.4); low-confidence results get flagged for human review or a fallback path rather than returned as-is.
+4. **Supersession handling** — before returning a part number, check whether it's been superseded (including grouped supersessions splitting into multiple successors) and resolve to the current valid part(s) — a concrete, testable correctness step (Section 3.2).
+5. **Reliability layer** — this is a "mission-critical," "fault-tolerant and accurate" API per the JD: idempotent requests, sensible timeouts/retries with backoff on any downstream call (the AI model, the catalog store), and a clear degraded-mode behavior (e.g., serve last-known-good catalog data if the AI layer is unavailable, rather than fail the whole request) — grounded in the [distributed systems correctness material](../13-distributed-systems/03-correctness-in-practice.md).
+6. **Observability** — track not just latency/error rate but *accuracy* signals over time (confidence-score distribution, human-review override rate, supersession-miss rate) — because for this product, a fast API returning wrong parts is a worse failure than a slow one, and that has to be visible to the team, not just inferred from customer complaints.
+
+Naming the AI-confidence and supersession-handling steps unprompted, alongside the standard reliability layer, is what separates a senior answer here from a generic "design a REST API" answer.
+
+## 5. Behavioral prep — this JD's specific angle
+
+- *"Tell me about ramping up on a domain you knew nothing about."* — directly maps to "become an expert in the extremely complex and underserved auto parts domain." A story about getting productive fast in an unfamiliar, genuinely complex domain (not just a new codebase) is exactly what's being tested.
+- *"Tell me about a time data quality/correctness mattered as much as uptime."* — maps to the "fault-tolerant and accurate" framing in Section 1; a story where "the system was up but returning wrong data" was the actual incident, not a generic outage, lands well here.
+- *"Why on-site, and why Auckland specifically?"* — this is an on-site, office-first role by explicit policy (Section 0) — have a real answer, not a default "I'm flexible," since the company has clearly made a deliberate trade-off here and wants to know you're bought in, not tolerating it.
+- *"Tell me about working with ambiguous or incomplete requirements."* — a company that tripled in 18 months and just closed a $50M round is still figuring things out in real time; a story about making a good call with incomplete information fits the stage of company this is.
+- *"Tell me about explaining a complex technical trade-off to a non-technical stakeholder."* — "strong written and verbal communication" is called out explicitly in the JD as its own bullet, not folded into "collaboration" — prepare a specific instance, not a general claim.
+
+## 6. Technical question bank
+
+Graded roughly junior → senior. Several early ones are drawn directly from reported real Partly interviews (Glassdoor) — don't skip them as "too basic," they've apparently been asked verbatim.
+
+**Core / must-have (several reported as actually asked)**
+
+1. What's the difference between the stack and the heap, and how does that relate to how a language like Go or Rust manages memory?
+2. Explain the difference between concurrency and parallelism, with a concrete example of each.
+3. What's the difference between a compiler and an interpreter? (Yes — this is a reported real question, and yes, it's a fun one to answer thoughtfully at a company whose flagship product is literally called Interpreter.)
+4. Design a REST or gRPC API for looking up compatible parts given a VIN. What does the schema look like, and what happens when the VIN maps to more than one valid trim configuration?
+5. Walk through how you'd model a parts catalog where a single "assembly" contains multiple sub-parts, and a repair might need the whole assembly or just one piece.
+
+**Applied / senior**
+
+6. Design the end-to-end feature from Section 4 without looking at the model answer first.
+7. How would you detect and handle "supersession" — a part number that's been discontinued and replaced by one or more newer part numbers — in a system that's already returned the old number to a customer?
+8. You're ingesting catalog data from 20,000+ suppliers, each with their own schema and update cadence. Design the ingestion pipeline. What's your data model before and after normalization?
+9. An AI-generated part recommendation is wrong but was returned with high confidence. Walk through your incident response and what you'd change about the confidence-scoring or review pipeline afterward.
+10. Explain idempotency and why it matters for an API where a client might retry a parts-order request after a timeout.
+11. Design an alerting strategy for an API where "returns fast but wrong data" is a worse failure mode than "returns an error" — what do you actually monitor?
+12. Compare Rust's ownership/borrowing model to garbage collection (as in Go) — what specific class of bugs does it eliminate, and what does it cost you in return?
+
+**Nice-to-have / breadth**
+
+13. What are the ACES and PIES data standards, at a high level, and why would a company building parts-fitment AI care about them even if it goes beyond them?
+14. How would you design a repository/adapter layer to normalize data from many structurally-different upstream suppliers into one canonical internal model?
+15. What's your approach to testing a system where "correctness" means matching real-world physical fitment data, not just passing unit tests against mocked inputs?
+16. Given a company that's tripled in size in 18 months, what changes about how you'd approach code review, on-call, and architecture decisions compared to a stable-headcount team?
+
+## 7. Questions worth asking them directly
+
+### 7.1 Technical & architecture
+
+- Interpreter is described as being on version 6, with the Series B partly funding version 7's training — does this role touch the model-serving/inference layer directly, or sit further downstream in the product APIs built on top of it? — directly probes the Section 0 ambiguity between "AI Research" and "Software Engineering" within the shared department.
+- How do you currently handle supersession chains and grouped supersessions in the catalog — is that logic in the AI layer, a separate rules/data layer, or both? — shows you did the Section 3.2 homework and is genuinely useful to know before day one.
+- Given Interpreter's stated confidence-scoring and auditability design, what happens operationally when a recommendation comes back low-confidence — is there a human-review queue, an automatic fallback, or something else? — ties Section 3.4 back to a real product question.
+- Where does Rust actually show up in the stack today, if anywhere, and was it a deliberate performance/safety choice for a specific component or more incidental? — resolves the JD's one concrete technology hint directly instead of guessing.
+- With data flowing in from 20,000+ suppliers/OEMs, what does the ingestion pipeline's failure mode look like when a supplier feed is malformed or delayed — does it degrade gracefully or can a bad feed take down catalog freshness? — a distributed-systems question grounded in Section 0's actual data-scale fact.
+
+### 7.2 Product & business
+
+- Post-Series B and the US market expansion, is New Zealand engineering's mandate shifting — more toward supporting US-market rollout specifically, or continuing broad platform work regardless of region? — shows awareness of the funding news and asks a real, current question rather than a generic "what's the roadmap."
+- Interpreter's reported accuracy numbers (98.8% parts-list accuracy, the Toyota F1 comparison against general LLMs) are self-published — is there external validation planned, or is that something the team is actively building toward as the company scales into enterprise/OEM deals? — a genuinely sharp question that shows critical thinking about the company's own public claims, not just repeating them approvingly.
+- Between the API/developer platform, Partly AI, and PartsPal, which product is the current center of gravity for engineering investment, and is that expected to change post-raise? — probes where your actual day-to-day work would land among the multiple product surfaces named in Section 0.
+- The 50+ manufacturer data agreements are described as core to Interpreter's training — how does new manufacturer/data-partner onboarding actually work operationally, and does engineering own any part of that pipeline? — connects the company's stated moat to a concrete question about whether that's an engineering-owned system or purely a business-development process.
+
+### 7.3 Team & role logistics
+
+- The JD names no specific language or cloud provider — what does the actual day-to-day stack look like for this team, concretely?
+- What's the on-call/support-escalation model for this team, if any, given the "mission-critical" framing of the SaaS/API platform?
+- Given the office-first policy, what does a typical week look like day-to-day in the Auckland office — is the immediate team fully co-located there, or split across Christchurch/Austin/London with Auckland being the exception?
+- Is relocation support (mentioned generally in the posting) applicable if relocating from outside New Zealand, and what does that process actually look like in practice?
+- How is success measured for this role in the first 6-12 months — a specific project, a reliability metric, something else?
+
+## 8. Suggested prep order
+
+1. **Section 0 (company snapshot) and Section 3.1 ("why Partly"), out loud.** As with any "why this company" opener, this is where the interviewer forms an early read — get the founding insight and Interpreter's actual differentiation story fluent before anything else.
+2. **Section 3.2 (auto parts domain crash course)** — the single highest-leverage item in this pack precisely because it's the one topic no generic backend-interview prep covers. Get fitment, ACES/PIES, and supersession fluent enough to use unprompted in a design answer.
+3. [Data Structures Fundamentals](../07-data-structures-algorithms/01-data-structures-fundamentals.md) and [Common Patterns](../07-data-structures-algorithms/02-common-patterns.md) — given the reported real questions in Section 6, don't skip fundamentals as "too basic for senior."
+4. [System Design](../06-system-design/README.md) and [API Design](../11-api-design/README.md), then this file's Section 4 scenario, out loud, until you can name all six layers unprompted.
+5. [Distributed Systems](../13-distributed-systems/README.md) — reliability/correctness depth, given "fault-tolerant" is explicit in the JD.
+6. This file's Section 3.6 (relational vs. NoSQL for a catalog domain) and Section 3.4 (AI grounding/confidence) — shorter reads, but the two most likely to catch you unprepared precisely because they connect domain-specific facts to general concepts.
+7. Section 3.3 (Rust) — proportional prep only; it's a bonus, not a requirement, but you should be able to discuss the ownership/GC trade-off intelligently regardless of whether you've written Rust.
+8. [Behavioral](../08-behavioral/README.md) — draft the five stories in Section 5 before the interview, not during it.
