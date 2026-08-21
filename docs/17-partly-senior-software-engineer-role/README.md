@@ -47,9 +47,29 @@ Read in this order; each links to the file that covers it in depth. This section
 
 ## 3. The gaps — content specific to this posting
 
-### 3.1 Answering "Why Partly?"
+### 3.1 Opening questions: "Tell me about yourself" and "Why Partly?"
 
-Don't lead with "I like cars" or "AI is exciting" — both are generic and don't show you understood the company. Lead with the actual insight: *"What got me is that this is an industry where 95%+ of transactions still happen over the phone, and the reason isn't that nobody's tried to digitize it — it's that the domain is genuinely too complex for a generic system: hundreds of millions of vehicle configurations, supersession chains, assembly hierarchies. That's a real, hard, underserved data-and-AI infrastructure problem, not a thin marketplace wrapper, and that's the kind of problem I want to be building on."* This directly echoes Section 0's founding insight back in your own words and signals you read past the JD.
+These two almost always open the loop, in some order, and they're the highest-leverage two minutes of the entire interview — the interviewer's first read forms here. Don't lead with "I like cars" or "AI is exciting" for the Partly question — both are generic and don't show you understood the company; lead with the actual founding insight from Section 0 (an industry still running on phone calls, a genuinely hard domain, not a thin marketplace wrapper) and connect it to real experience, not enthusiasm alone.
+
+**Prepared answer — "Share a bit about yourself and your experience/interest":**
+
+> I'm a backend engineer with over 8 years of experience building distributed systems at scale. Right now I'm at Careem (Uber) in Dubai, where I led a full integration with one of Saudi Arabia's largest restaurant networks, covering partner onboarding, catalog sync, order lifecycle, and delivery tracking. I also rebuilt the reliability layer for a UAE government API feed, replacing lossy retry logic with a proper error classifier and an ordered retry queue so regulated events stopped silently dropping.
+>
+> Before that I spent almost three years as Lead Backend Engineer at Telkom Indonesia, the largest telco in Southeast Asia. I built their AI Proxy and MCP Orchestrator from scratch. It ended up powering the company's internal AI platform across multiple business units, supporting LLMs, vision models and embeddings with proper multi-tenant isolation. I also redesigned a network monitoring system there and cut memory usage by around 80%.
+>
+> Further back I worked on infrastructure serving over 100 million users at Bukalapak, and was the first engineer hired at RRQ Guild, where I helped shape the backend strategy and built their community platform from zero.
+>
+> Go and distributed systems are what I keep coming back to. Over the last couple of years I've leaned more into AI and LLM infrastructure specifically, trying to make that side of things actually production ready rather than just a proof of concept. That's a big part of why Partly caught my attention.
+
+**Prepared answer — "What interests you about Partly and why do you think you would be a good fit?":**
+
+> What draws me to Partly is that you're building real infrastructure for an industry tech has mostly ignored, automotive parts and repair. Hard technical problems in an underserved space is exactly the kind of work I like. Most of my career has been about taking unglamorous but critical systems and making them reliable at scale, like a government API event relay, an internal AI platform for a national telco, or monitoring infrastructure for a platform with 100 million users.
+>
+> The AI infrastructure side is probably where I'd add the most value. At Telkom I built an AI Proxy and MCP Orchestrator from scratch. It was real production infrastructure serving LLMs, vision models and embeddings to multiple business units, with proper isolation, observability, and cost tracking rather than a thin API wrapper. If Interpreter needs that kind of thinking applied at the infrastructure layer, that's the space I've spent the last few years working in.
+>
+> I'm also drawn to the stage Partly is at. I was the first engineer at a previous startup, so I know what it takes to help set technical direction while a company is growing fast, and I'd want to bring that same ownership here. I'm open to relocating to Auckland and happy to talk through specifics.
+
+**Why this answer works, tied back to Sections 0 and 1:** it leads with distributed-systems-at-scale rather than a generic self-intro, names the government-feed and telco-AI-platform stories that map almost one-to-one onto Section 1's "fault-tolerant and accurate" framing and Section 3.4's AI-grounding/confidence-scoring theme, and directly volunteers the relocation and first-engineer/ownership angle that Section 0's culture facts (on-site Auckland, a company that tripled in 18 months) make relevant — all without being asked. The one gap worth having a bridge ready for: the auto-parts domain itself isn't in the background above, so expect (or volunteer) a short pivot sentence such as *"I haven't worked in automotive parts specifically, but the shape of the problem — reconciling inconsistent data from many sources into something a downstream system can trust — is exactly what the Telkom and government-feed work were."*
 
 ### 3.2 The auto parts domain crash course
 
