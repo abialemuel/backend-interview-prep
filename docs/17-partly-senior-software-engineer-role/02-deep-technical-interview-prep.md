@@ -19,6 +19,8 @@ Sources: [Partly Group Interview Questions — Glassdoor](https://www.glassdoor.
 
 Treat this as two blocks, roughly 20/25: **your experience and approach**, then **technical depth probing** that will likely include the CS-fundamentals questions above plus Go-specific senior judgment questions. Interviewers at this level are evaluating *judgment*, not typing speed or trivia recall — the strongest signal is naming trade-offs and failure modes before being asked, not just describing the happy path.
 
+One fact worth carrying into every answer in this block: Partly's own engineering blog states outright that the team runs **"no sprints or scrums,"** flat structure, engineers handed **problems rather than specs**, expected to go talk to the customer directly rather than wait for a written requirement (main file Section 0). "Your approach" isn't a throwaway phrase in the round's title — this is a company that explicitly hires and evaluates for how you behave with ambiguity, not how well you follow process. Every "walk me through how you approached X" answer should show you diagnosing the actual problem yourself, not executing someone else's ticket.
+
 ### A.1 Narrating your experience — a structure that lands for this JD
 
 Given Section 1/3 of the main prep file (fault-tolerant + accurate APIs, distributed systems, AI-infrastructure interest), lead with the stories that map most directly, in this order of relevance:
