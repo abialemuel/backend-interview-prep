@@ -1,6 +1,19 @@
 # Round 2: Deep Technical Interview (45 min live + 90 min take-home)
 
-This file is dedicated to one specific round: **"Deep Technical Interview" — a 45-minute live technical conversation on Google Meet covering your engineering experience and approach, paired with a 90-minute take-home exercise completed on your own time.** Everything below is either (a) sourced from real, dated candidate reports for Partly's engineering interviews, clearly marked as such, or (b) general best-practice for this exact round shape (live-experience-conversation + solo take-home) at a senior level, applied to Go and to Partly's own domain. Where something is inference rather than a confirmed fact about *this specific round*, it says so — don't over-trust anything below that isn't labeled as sourced.
+This file is dedicated to one specific round: **"Deep Technical Interview" — a 45-minute live technical conversation on Google Meet covering your engineering experience and approach, paired with a 90-minute take-home exercise completed on your own time.** Everything below is either (a) sourced from real, dated candidate reports for Partly's engineering interviews, clearly marked as such, or (b) general best-practice for this exact round shape (live-experience-conversation + solo take-home) at a senior level, applied to Go and to Partly's own domain. Where something is inference rather than a confirmed fact about *this specific round*, it says so — don't over-trust anything below that isn't labeled as sourced. A second research pass (Coderbyte's assessment specifics, Partly's own hiring-process posts, live API-doc examples) turned up nothing further — what's below is the ceiling of what's publicly findable, not an incomplete draft.
+
+## Do these first, in order — the priority checklist
+
+If tonight is short, work top to bottom; everything here links to the fuller section below it.
+
+1. **[Say the three CS-fundamentals answers out loud, cold](#a2-cs-fundamentals-rapid-fire-the-reported-real-questions-answered-tight)** — stack vs. heap, concurrency vs. parallelism, compiler vs. interpreter. These are the highest-confidence, actually-reported questions in this entire pack. Non-negotiable.
+2. **[Rehearse your two lead stories three layers deep](#a1-narrating-your-experience-a-structure-that-lands-for-this-jd)** — the UAE government API reliability rebuild and the Telkom AI Proxy/MCP Orchestrator. Not the summary sentence — the follow-up layer, since the Firebase/Stripe precedent means they will dig into specifics.
+3. **[Run the Go take-home skeleton locally once](#b2-practice-exercise-domain-realistic-timeboxed)** (`go test ./...`) so the project-structure and table-driven-test muscle memory is warm before the real 90 minutes starts.
+4. **[Re-read the main file's end-to-end scenario](README.md#4-scenario-question-design-the-whole-thing-end-to-end)** once — the take-home may well be a smaller, concrete version of exactly that fitment/supersession/confidence design.
+5. **[Skim the Go-specific senior questions](#a3-go-specific-senior-questions-likely-in-scope)** once — goroutine judgment, memory/escape analysis, context propagation, error-wrapping, interfaces.
+6. **Have two or three [questions to ask them](README.md#7-questions-worth-asking-them-directly) ready** — the AI-eval/confidence-scoring one and the "where does this role sit relative to AI Research" one fit a *technical* interviewer best.
+
+The sections below are the full detail behind each of those six — read top to bottom if you have time, or jump straight to whichever one you're least confident on.
 
 ## What's actually known about Partly's technical interviews
 
@@ -353,10 +366,6 @@ A structure that avoids the single most common take-home failure — running out
 3. **55-75 min**: tests — at minimum the happy path plus the two or three edge cases most likely to be graded on (empty input, not-found, the domain-specific tricky case like supersession above).
 4. **75-90 min**: a short README covering what you'd do with more time (the honest, senior move — naming what you *didn't* get to and why is a stronger signal than silently omitting it), any assumptions you made, and how to run it.
 
-## Final checklist for tomorrow
+## Last check before tomorrow
 
-- [ ] Say the stack/heap, concurrency/parallelism, and compiler/interpreter answers above out loud once, cold, without reading them.
-- [ ] Pick your two lead stories (UAE government API reliability rebuild; Telkom AI Proxy/MCP Orchestrator) and rehearse going *three layers deep* on each, not just the summary.
-- [ ] Re-read [main file Section 4](README.md#4-scenario-question-design-the-whole-thing-end-to-end) (the fitment/supersession/confidence scenario) once — the take-home may well be a smaller, concrete version of exactly that.
-- [ ] Run the Go skeleton above locally once (`go test ./...`) so muscle memory for project structure and table-driven tests is warm.
-- [ ] Have two or three of [Section 7's questions](README.md#7-questions-worth-asking-them-directly) ready in case this round ends with time for you to ask something — the AI-eval/confidence-scoring one and the "where does this role sit relative to AI Research" one are the strongest fits for a *technical* interviewer specifically, more so than the business-facing ones.
+Back to the [priority checklist](#do-these-first-in-order-the-priority-checklist) at the top — if every box there is genuinely done, you're ready. Sleep beats one more read-through at this point.
