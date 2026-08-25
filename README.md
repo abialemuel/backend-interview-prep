@@ -25,7 +25,8 @@ backend-interview-prep/
     ├── STUDY-GUIDE.md                 ← how to use this repo + study plan
     ├── 01-languages/
     │   ├── php/                       ← PHP 8.x core, OOP, performance, security
-    │   └── go/                        ← Go core, concurrency, interfaces, testing
+    │   ├── go/                        ← Go core, concurrency, interfaces, testing
+    │   └── rust/                      ← ownership, borrowing, concurrency, traits, ecosystem
     ├── 02-frameworks/
     │   ├── laravel/                   ← architecture, Eloquent, queues, security
     │   └── nextjs/                    ← rendering, data fetching, API routes
@@ -59,7 +60,7 @@ backend-interview-prep/
 
 | # | Category | Focus | Files |
 |---|----------|-------|-------|
-| 1 | Languages | PHP, Go | core, OOP/modern, concurrency, performance, security, Q&A |
+| 1 | Languages | PHP, Go, Rust | core, OOP/modern, concurrency, ownership/borrowing, performance, security, Q&A |
 | 2 | Frameworks | Laravel, Next.js | architecture, ORM, routing/queues, rendering, Q&A |
 | 3 | Databases | MySQL, PostgreSQL, Redis | indexing, transactions, replication, MVCC, data structures, persistence, Q&A |
 | 4 | AWS | Infrastructure | compute, storage, networking, databases, IAM, monitoring, Q&A |

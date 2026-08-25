@@ -15,7 +15,7 @@ Each topic is organized into:
 
 | Category | Focus |
 |----------|-------|
-| [Languages](01-languages/go/README.md) | Go, PHP — core, concurrency, OOP, performance, security |
+| [Languages](01-languages/go/README.md) | Go, PHP, Rust — core, concurrency, OOP, ownership, performance, security |
 | [Frameworks](02-frameworks/laravel/README.md) | Laravel, Next.js — architecture, ORM, rendering |
 | [Databases](03-databases/mysql/README.md) | MySQL, PostgreSQL, Redis — indexing, transactions, replication, caching |
 | [AWS](04-aws/README.md) | Compute, storage, networking, IAM, monitoring |

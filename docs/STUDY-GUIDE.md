@@ -27,6 +27,8 @@ Adjust based on your existing strength and interview timeline. If you have less 
 - `01-languages/go/04-testing-and-performance.md`
 - `01-languages/go/05-interview-questions.md`
 
+**Optional — Rust**, only if a target role names it (a growing bonus/preferred skill at systems-heavy or performance-sensitive shops): `01-languages/rust/`. Read `01-core-concepts.md` (ownership/borrowing/lifetimes — the one topic no other language in this repo covers) and `05-interview-questions.md` at minimum; the concurrency and traits/error-handling files go deeper if the role is explicitly Rust-heavy. Most backend roles will not test this — don't let it crowd out Weeks 3+ unless the JD calls for it.
+
 ### Week 3 — Frameworks
 - Laravel: all files in `02-frameworks/laravel/`
 - Next.js: all files in `02-frameworks/nextjs/`
