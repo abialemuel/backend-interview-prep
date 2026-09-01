@@ -221,6 +221,107 @@ Use the Telkom stateless redesign or Careem relay as an example of a decision wo
 
 ## 9. Likely technical questions
 
+### Candidate-reported coding problem: valid parentheses
+
+A candidate said that Screening Eagle asked a **parentheses problem in Go**. The exact wording and interview round are not confirmed, but the most likely version is the standard balanced-brackets problem:
+
+> Given a string containing `()`, `[]`, and `{}`, return whether every opening bracket is closed by the same type of bracket in the correct order.
+
+Examples:
+
+| Input | Result | Reason |
+| --- | --- | --- |
+| `"()[]{}"` | `true` | All pairs are complete. |
+| `"([{}])"` | `true` | Nested pairs close in reverse order. |
+| `"(]"` | `false` | The bracket types do not match. |
+| `"([)]"` | `false` | The pairs cross instead of nesting. |
+| `"(("` | `false` | Two opening brackets remain. |
+| `"]"` | `false` | A closing bracket appears with nothing to close. |
+
+Before coding, confirm whether the input contains only brackets. If ordinary text is allowed, ask whether non-bracket characters should be ignored or rejected. Do not silently choose a behavior the prompt did not specify.
+
+The useful observation is that the most recently opened bracket must be the first one closed. That is exactly a stack. Push opening brackets; for a closing bracket, compare it with the top of the stack. Any mismatch fails immediately. At the end, the stack must be empty.
+
+```go
+package brackets
+
+func IsValid(s string) bool {
+	stack := make([]rune, 0, len(s))
+	pairs := map[rune]rune{
+		')': '(',
+		']': '[',
+		'}': '{',
+	}
+
+	for _, ch := range s {
+		switch ch {
+		case '(', '[', '{':
+			stack = append(stack, ch)
+		case ')', ']', '}':
+			if len(stack) == 0 || stack[len(stack)-1] != pairs[ch] {
+				return false
+			}
+			stack = stack[:len(stack)-1]
+		default:
+			return false
+		}
+	}
+
+	return len(stack) == 0
+}
+```
+
+This version deliberately rejects unexpected characters. If the interviewer says to ignore them, replace the `default` branch with `continue`.
+
+The algorithm is **O(n) time** because it visits each rune once, and **O(n) space** in the worst case, such as `"(((("`. A counter is not enough once multiple bracket types are allowed: `"([)]"` can have balanced counts while still closing in the wrong order.
+
+Table-driven tests:
+
+```go
+package brackets
+
+import "testing"
+
+func TestIsValid(t *testing.T) {
+	tests := []struct {
+		name string
+		in   string
+		want bool
+	}{
+		{name: "empty", in: "", want: true},
+		{name: "separate pairs", in: "()[]{}", want: true},
+		{name: "nested", in: "([{}])", want: true},
+		{name: "wrong type", in: "(]", want: false},
+		{name: "wrong order", in: "([)]", want: false},
+		{name: "opening left", in: "((", want: false},
+		{name: "closing first", in: "]", want: false},
+		{name: "unexpected character", in: "(a)", want: false},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := IsValid(tt.in); got != tt.want {
+				t.Fatalf("IsValid(%q) = %v, want %v", tt.in, got, tt.want)
+			}
+		})
+	}
+}
+```
+
+A clean way to talk while solving it:
+
+> I need to preserve nesting order, so I will use a stack rather than independent counters. When I see an opener I push it. When I see a closer, an empty stack or a different opener at the top means the string is invalid. I pop a matching opener, then finally check that nothing remains. This is linear time and linear worst-case space.
+
+Possible follow-ups:
+
+- **Only `(` and `)` are allowed:** a depth counter is sufficient; fail if it becomes negative and require zero at the end.
+- **Return the first invalid position:** return `(bool, int)` and keep the current rune or byte index.
+- **Report the expected bracket:** return a small error containing the position, actual closer, and expected closer.
+- **Process a stream:** keep the stack between chunks; the decision is final only at end-of-stream unless a mismatch occurs earlier.
+- **Very large ASCII input:** use `[]byte` rather than `[]rune`. Brackets are ASCII, and this avoids rune handling that the problem does not need.
+
+For the real interview, use the representation that matches the prompt. The rune-based version above is easy to read, but saying that ASCII brackets could use bytes shows awareness without prematurely optimizing.
+
 1. How would you design an idempotent webhook receiver when the provider retries and delivers events out of order?
 2. A batch report job processes a large inspection project and fails at 80%. How do you resume safely without duplicating output?
 3. How would you synchronize edits from an intermittently connected field device with changes made in the web application?
