@@ -30,6 +30,7 @@ Each topic is organized into:
 | [Distributed Systems](13-distributed-systems/README.md) | Consensus, replication, clocks, correctness in practice |
 | [AI & LLM Integration](14-ai-llm-integration/README.md) | LLM APIs, RAG, vector search, LLMs in production |
 | [SRE / Observability Role Prep](15-sre-observability-role/README.md) | JD-mapped prep: Datadog admin, K8s/AWS/CI-CD observability integration, Python ops scripting |
+| [Screening Eagle / Senior Backend Engineer Prep](16-screening-eagle-senior-backend-engineer-role/README.md) | HR screen, salary research, INSPECT product context, CV-to-JD mapping, and technical interview preparation |
 
 ## Keeping content current
 
