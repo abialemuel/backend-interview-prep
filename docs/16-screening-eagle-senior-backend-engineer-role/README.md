@@ -229,37 +229,39 @@ One candidate told me they got a parentheses problem. I do not have the exact pr
 
 Examples: `()[]{}` and `([{}])` are valid. `(]`, `([)]`, `((`, and `]` are not.
 
-This is a stack problem. The next closing bracket has to match the most recent opening bracket. In Go, a byte slice is enough because all six bracket characters are ASCII.
+This is a stack problem. The next closing bracket has to match the most recent opening bracket.
 
 ```go
-func validParentheses(s string) bool {
-	stack := make([]byte, 0, len(s))
+package main
 
-	for i := 0; i < len(s); i++ {
-		switch s[i] {
-		case '(', '[', '{':
-			stack = append(stack, s[i])
+import "fmt"
 
-		case ')', ']', '}':
-			if len(stack) == 0 {
+func isValid(s string) bool {
+	stack := []rune{}
+	pairs := map[rune]rune{
+		')': '(',
+		']': '[',
+		'}': '{',
+	}
+
+	for _, char := range s {
+		if opening, isClosing := pairs[char]; isClosing {
+			if len(stack) == 0 || stack[len(stack)-1] != opening {
 				return false
 			}
-
-			top := stack[len(stack)-1]
-			if s[i] == ')' && top != '(' ||
-				s[i] == ']' && top != '[' ||
-				s[i] == '}' && top != '{' {
-				return false
-			}
-
 			stack = stack[:len(stack)-1]
-
-		default:
-			return false
+		} else {
+			stack = append(stack, char)
 		}
 	}
 
 	return len(stack) == 0
+}
+
+func main() {
+	fmt.Println(isValid("()[]{}")) // true
+	fmt.Println(isValid("([)]"))   // false
+	fmt.Println(isValid("{[]}"))   // true
 }
 ```
 
@@ -267,7 +269,7 @@ What I would say while coding:
 
 > A counter works if there is only one bracket type, but it cannot catch `([)]`. I need the opening order, so I will keep a stack. A closing bracket must match the top item; otherwise I can return false immediately. At the end the stack must be empty.
 
-Complexity is **O(n) time** and **O(n) space** in the worst case. Before starting, ask two small questions: can the input be empty, and can it contain characters other than brackets? The code above considers an empty string valid and rejects other characters.
+Complexity is **O(n) time** and **O(n) space** in the worst case. Before starting, ask whether the input can be empty and whether it contains only brackets. This implementation assumes the input contains only bracket characters; otherwise every non-closing character would be pushed onto the stack.
 
 Test these cases before saying you are done:
 
