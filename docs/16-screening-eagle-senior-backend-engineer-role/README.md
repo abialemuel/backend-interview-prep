@@ -221,47 +221,39 @@ Use the Telkom stateless redesign or Careem relay as an example of a decision wo
 
 ## 9. Likely technical questions
 
-### Candidate-reported coding problem: valid parentheses
+### Candidate tip: practise the parentheses question in Go
 
-A candidate said that Screening Eagle asked a **parentheses problem in Go**. The exact wording and interview round are not confirmed, but the most likely version is the standard balanced-brackets problem:
+One candidate told me they got a parentheses problem. I do not have the exact prompt, so I would practise the common version without assuming it is guaranteed:
 
-> Given a string containing `()`, `[]`, and `{}`, return whether every opening bracket is closed by the same type of bracket in the correct order.
+> Return `true` when a string of `()`, `[]`, and `{}` is properly balanced and nested.
 
-Examples:
+Examples: `()[]{}` and `([{}])` are valid. `(]`, `([)]`, `((`, and `]` are not.
 
-| Input | Result | Reason |
-| --- | --- | --- |
-| `"()[]{}"` | `true` | All pairs are complete. |
-| `"([{}])"` | `true` | Nested pairs close in reverse order. |
-| `"(]"` | `false` | The bracket types do not match. |
-| `"([)]"` | `false` | The pairs cross instead of nesting. |
-| `"(("` | `false` | Two opening brackets remain. |
-| `"]"` | `false` | A closing bracket appears with nothing to close. |
-
-Before coding, confirm whether the input contains only brackets. If ordinary text is allowed, ask whether non-bracket characters should be ignored or rejected. Do not silently choose a behavior the prompt did not specify.
-
-The useful observation is that the most recently opened bracket must be the first one closed. That is exactly a stack. Push opening brackets; for a closing bracket, compare it with the top of the stack. Any mismatch fails immediately. At the end, the stack must be empty.
+This is a stack problem. The next closing bracket has to match the most recent opening bracket. In Go, a byte slice is enough because all six bracket characters are ASCII.
 
 ```go
-package brackets
+func validParentheses(s string) bool {
+	stack := make([]byte, 0, len(s))
 
-func IsValid(s string) bool {
-	stack := make([]rune, 0, len(s))
-	pairs := map[rune]rune{
-		')': '(',
-		']': '[',
-		'}': '{',
-	}
-
-	for _, ch := range s {
-		switch ch {
+	for i := 0; i < len(s); i++ {
+		switch s[i] {
 		case '(', '[', '{':
-			stack = append(stack, ch)
+			stack = append(stack, s[i])
+
 		case ')', ']', '}':
-			if len(stack) == 0 || stack[len(stack)-1] != pairs[ch] {
+			if len(stack) == 0 {
 				return false
 			}
+
+			top := stack[len(stack)-1]
+			if s[i] == ')' && top != '(' ||
+				s[i] == ']' && top != '[' ||
+				s[i] == '}' && top != '{' {
+				return false
+			}
+
 			stack = stack[:len(stack)-1]
+
 		default:
 			return false
 		}
@@ -271,56 +263,25 @@ func IsValid(s string) bool {
 }
 ```
 
-This version deliberately rejects unexpected characters. If the interviewer says to ignore them, replace the `default` branch with `continue`.
+What I would say while coding:
 
-The algorithm is **O(n) time** because it visits each rune once, and **O(n) space** in the worst case, such as `"(((("`. A counter is not enough once multiple bracket types are allowed: `"([)]"` can have balanced counts while still closing in the wrong order.
+> A counter works if there is only one bracket type, but it cannot catch `([)]`. I need the opening order, so I will keep a stack. A closing bracket must match the top item; otherwise I can return false immediately. At the end the stack must be empty.
 
-Table-driven tests:
+Complexity is **O(n) time** and **O(n) space** in the worst case. Before starting, ask two small questions: can the input be empty, and can it contain characters other than brackets? The code above considers an empty string valid and rejects other characters.
 
-```go
-package brackets
+Test these cases before saying you are done:
 
-import "testing"
-
-func TestIsValid(t *testing.T) {
-	tests := []struct {
-		name string
-		in   string
-		want bool
-	}{
-		{name: "empty", in: "", want: true},
-		{name: "separate pairs", in: "()[]{}", want: true},
-		{name: "nested", in: "([{}])", want: true},
-		{name: "wrong type", in: "(]", want: false},
-		{name: "wrong order", in: "([)]", want: false},
-		{name: "opening left", in: "((", want: false},
-		{name: "closing first", in: "]", want: false},
-		{name: "unexpected character", in: "(a)", want: false},
-	}
-
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := IsValid(tt.in); got != tt.want {
-				t.Fatalf("IsValid(%q) = %v, want %v", tt.in, got, tt.want)
-			}
-		})
-	}
-}
+```text
+""       -> true
+"()"     -> true
+"([{}])" -> true
+"(]"     -> false
+"([)]"   -> false
+"(("     -> false
+"]"      -> false
 ```
 
-A clean way to talk while solving it:
-
-> I need to preserve nesting order, so I will use a stack rather than independent counters. When I see an opener I push it. When I see a closer, an empty stack or a different opener at the top means the string is invalid. I pop a matching opener, then finally check that nothing remains. This is linear time and linear worst-case space.
-
-Possible follow-ups:
-
-- **Only `(` and `)` are allowed:** a depth counter is sufficient; fail if it becomes negative and require zero at the end.
-- **Return the first invalid position:** return `(bool, int)` and keep the current rune or byte index.
-- **Report the expected bracket:** return a small error containing the position, actual closer, and expected closer.
-- **Process a stream:** keep the stack between chunks; the decision is final only at end-of-stream unless a mismatch occurs earlier.
-- **Very large ASCII input:** use `[]byte` rather than `[]rune`. Brackets are ASCII, and this avoids rune handling that the problem does not need.
-
-For the real interview, use the representation that matches the prompt. The rune-based version above is easy to read, but saying that ASCII brackets could use bytes shows awareness without prematurely optimizing.
+If the interviewer allows only `(` and `)`, simplify it to a depth counter: increment for `(`, decrement for `)`, fail as soon as depth becomes negative, and return `depth == 0`. Likely follow-ups are returning the first bad index or handling input as a stream.
 
 1. How would you design an idempotent webhook receiver when the provider retries and delivers events out of order?
 2. A batch report job processes a large inspection project and fails at 80%. How do you resume safely without duplicating output?
