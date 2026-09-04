@@ -4,6 +4,8 @@ This is a targeted preparation pack for the Singapore-based **Senior Backend Eng
 
 > **Evidence note:** Screening Eagle does not publish a definitive engineering interview process. The stages below combine public candidate reports with a clearly labeled estimate. Salary figures are listing data, not a guaranteed offer.
 
+> **Candidate-reported technical round:** A candidate described a two-hour panel covering system design and data structures. The main prompt was to design a resumable API for a 1 GB upload. See [Bulk File Upload System Design](02-bulk-file-upload-system-design.md) for a full practice run.
+
 ## 1. Company and product context
 
 Screening Eagle Technologies combines Proceq's non-destructive testing hardware with cloud, mobile, data, and AI software originally developed by Singapore-based Dreamlab. Its mission is to **protect the built world** by helping engineers inspect structures and infrastructure more effectively.
