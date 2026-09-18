@@ -4,6 +4,10 @@ Targeted prep for the **Senior Product Engineer, IMS** role (Remote/Berlin, Hybr
 
 > **Evidence note:** Distribusion does not publish its interview process. The stage map and salary figures below are estimates from public data (company site, news page, job post, Berlin market norms). Salary numbers are market estimates, not offer data. Verify with the recruiter.
 
+> **Salary-data note:** Glassdoor, kununu, and levels.fyi have no accessible Distribusion data (pages blocked or empty — small company, few reviews). Compensation expectations must come from Berlin market benchmarks and what Aulia confirms in the screen.
+
+> **Source CV:** `~/Downloads/Abia New CV.pdf` (July version). All candidate facts below come from it.
+
 > **Contact:** Talent Partner Aulia — `talent@distribusion.com`. Use this email for scheduling questions, thank-you follow-ups, and logistics.
 
 ## 1. Company research cheat sheet
@@ -44,6 +48,26 @@ IMS = the internal/operator-facing side of the platform (schedule management, se
 
 Tech signals from the post: **Python** backend, distributed systems, event-driven architecture, outbox/idempotency/retries/eventual consistency, deep SQL (ACID, indexing, locking, partitioning, sharding), cloud infra, messaging systems, distributed databases. Plus DX: CI, PR reviews, AI-assisted development.
 
+### Candidate snapshot (from CV)
+
+- **Profile:** Senior Software Engineer — Backend & AI Systems. 8+ years. Based South Tangerang, Indonesia (UTC+7), open to relocation.
+- **Stack:** Go (primary), Ruby, Python, PHP. FastAPI + FastMCP on the Python side. PostgreSQL, MySQL, MongoDB, Redis, DynamoDB, Elasticsearch. Kafka, RabbitMQ. AWS/GCP/Azure, Kubernetes, Terraform. Datadog, OTel, Jaeger.
+- **Current:** Careem (Uber), Dubai — Nov 2025–present. KSA restaurant-network integration end-to-end (catalog sync, order lifecycle, promotions); reliability layer for UAE government (CERT) event relay — 3-way error classifier + SQS FIFO retry with ordering gate.
+- **Before:** Telkom Indonesia, Lead Backend (Feb 2023–Nov 2025) — AI Proxy & MCP Orchestrator powering TelkomGPT, RBAC multi-tenant isolation, AI-assisted GitLab MR reviewer, ~80% memory reduction via stateless migration + K8s autoscaling, Board of Experts, p99 query optimization, full observability stack, mentoring.
+- **Earlier:** RRQ Guild (first engineer, 0→1 platform + Auth0 + AWS), Tanihub (FIFO stock reservation, payment microservice), Hubbedin (Singapore, part-time), Bukalapak (O2O tribe, 100M+ users, on-prem→GCP migration).
+- **Education:** BSc MIS, Ciputra University, GPA 3.8, Best Student. 2× hackathon winner.
+
+**Direct mappings to the job post — use these in every round:**
+
+| Job post asks | Your evidence |
+|---|---|
+| Seat allocation across stops, reallocation (swaps, merges) | **Tanihub FIFO stock reservation** — real-time shared inventory reservation at scale; nearest analog to seat inventory |
+| Event-driven reliability, retries, eventual consistency | **Careem CERT relay** — error classification, FIFO ordering gate, exponential backoff; fixed silent drop of regulated events |
+| AI-assisted development, tooling, self-service | **Telkom AI Proxy + MCP Orchestrator + AI MR reviewer** — you built exactly what the post wants "driven" |
+| Deep database expertise | p99 query optimization via indexing + execution plans (Telkom); Redis caching at Bukalapak scale |
+| Ownership, full lifecycle, standards | Board of Experts at Telkom; first engineer at RRQ Guild (0→1); led on-prem→GCP migration |
+| Ambiguous requirements → pragmatic solutions | Partner integration at Careem (KSA network onboarding automation) |
+
 ## 2. Likely interview process (estimate)
 
 Typical for a Series C European startup hiring a senior engineer:
@@ -61,11 +85,9 @@ Confirm the exact map with Aulia in the HR call (see §6).
 
 ### 3.1 "Tell me about yourself" (the 90-second version)
 
-Adapt to your actual résumé, but hit this arc: backend engineer → distributed systems and data-intensive services → ownership across full lifecycle → product impact. Keep it under 2 minutes.
+> I'm a backend engineer with 8+ years building and operating distributed systems — design, deployment, monitoring, and on-call, not just implementation. Right now I'm at Careem, Uber's super-app, where I own partner-facing integrations for KSA restaurant networks and built the reliability layer for a government event relay — error classification, FIFO-ordered retries, no silent drops. Before that, as a Lead Backend Engineer at Telkom Indonesia, I built an AI platform from scratch powering multiple business units, drove an 80% memory reduction through a stateless rearchitecture, and sat on the company-wide Board of Experts setting backend standards. Earlier I did high-scale consumer work at Bukalapak, 100M+ users, and — most relevant to this role — at Tanihub I built a FIFO stock reservation system for real-time shared inventory at scale. I'm looking for a role where engineering decisions directly move the product, and owning systems like schedules, seat allocation, and pricing end-to-end is exactly that.
 
-> I'm a backend engineer with [N] years building and operating services in distributed systems — design, deployment, monitoring, and on-call, not just implementation. Most recently at [company] I owned [system], which handled [scale number], where I worked on [1–2 concrete things: e.g., seat/inventory-style allocation, event-driven pipelines, database performance]. I've also done a lot of [DX work: CI, testing strategy, tooling]. I'm looking for a role where engineering decisions directly move the product — which is exactly what this role is: schedules, seat allocation, and pricing are the product, and the engineering quality is the business.
-
-**Rule:** end with "why this role", not with your current job. That tees up the next question.
+**Structure:** present → recent proof of seniority → most relevant domain story (Tanihub inventory ≈ seat allocation) → why this role. Keep under 2 minutes, do not recite the whole CV.
 
 ### 3.2 "Why Distribusion?"
 
@@ -79,21 +101,21 @@ Key: connect **their domain** to **systems problems you enjoy**, and show you re
 
 Model answer (short):
 
-> Three things. First, the problems: seat allocation and dynamic pricing under real-world disruption — vehicle swaps, merges, delays — are some of the hardest distributed-state problems in travel, and I want to work on exactly that. Second, the timing: 10x growth in a year and a Series C means the platform is being rebuilt for the next order of magnitude; a senior engineer can shape that instead of babysitting it. Third, the team's position: the Deutsche Bahn tender and partnerships with Google Maps and Booking.com show the network effect is real. I want to build infrastructure that a whole industry runs on.
+> Three things. First, the problems: seat allocation and dynamic pricing under real-world disruption — vehicle swaps, merges, delays — are some of the hardest distributed-state problems in travel, and they map directly onto work I've done. At Tanihub I built FIFO stock reservation for shared inventory at scale; at Careem I build reliability layers for event flows where a dropped event is a real business incident. Second, the timing: 10x growth in a year and a Series C means the platform is being rebuilt for the next order of magnitude — a senior engineer can shape that instead of babysitting it. Third, the team's position: the Deutsche Bahn tender and partnerships with Google Maps and Booking.com show the network effect is real. I want to build infrastructure that a whole industry runs on.
 
 ### 3.3 "Why are you leaving your current role?" / "Why now?"
 
-Rules: no negativity about current employer; frame as pull, not push. Match to this role's gaps.
+Rules: no negativity about Careem; frame as pull, not push.
 
-> I've grown a lot at [company] — [one real achievement]. But [the scale/impact ceiling: e.g., our traffic plateaued / my scope narrowed to one service / there's no room to own a product end-to-end]. I want the next challenge to be owning a system where my decisions directly move business metrics. Distribusion's stage — post-Series C, 10x growth, core systems being rebuilt — is exactly where a senior engineer has maximum leverage.
+> Careem has been a strong chapter — I'm working on partner integrations and event reliability at real scale, and Uber's engineering bar is high. But my scope is one integration domain within a giant org. I want to own a core system end-to-end again, the way I did at Telkom and RRQ Guild, where my decisions move the product's business metrics directly. Distribusion's stage — post-Series C, 10x growth, core operator systems being rebuilt — is exactly where a senior engineer has maximum leverage. And honestly, the problem is a good fit: allocation under real-world disruption is the kind of system I enjoy most.
 
-### 3.4 "The role is Python; your background is [Go/PHP/etc.]. How do you feel about that?"
+### 3.4 "The role is Python; your background is Go. How do you feel about that?"
 
-**Expect this. It is the #1 HR-screen risk for this job.** Prepare a crisp, honest, confident answer:
+**Expect this. It is the #1 HR-screen risk for this job.** Your CV already lists Python (FastAPI, FastMCP), so the answer is strong — never present yourself as a Python beginner:
 
-> My primary language is [X], but the transferable core is what this role actually tests: transaction management, locking, indexing, idempotency, outbox patterns, event-driven design — none of that lives in a language. I've [real evidence: worked in multiple languages / shipped a production service in a second language / picked up X in weeks at Y]. I'd ramp on Python's ecosystem before day one — I'd start now with FastAPI/async patterns and the testing stack — and I'm comfortable being judged on that ramp.
+> My primary production language is Go, but Python is part of my daily toolkit — I've used it with FastAPI for services and FastMCP for the MCP orchestrator I built at Telkom, which is production software serving multiple business units. The core of this role is transferable regardless of language: transaction management, locking, idempotency, outbox patterns, event-driven design — none of that lives in a language. I'd ramp fully on the Python ecosystem's conventions — testing stack, async patterns, typing — and I'm comfortable being judged on that ramp.
 
-Do **not** say "Python is easy, I'll learn it in a weekend." Do **not** over-apologize. If you already have any production Python, name the specific project. If not, show you've started: mention reading through their engineering content or building a small service.
+Do **not** say "Python is easy, I'll learn it in a weekend." Do **not** over-apologize. Lead with FastAPI/FastMCP production usage, then the patterns argument. If asked for detail in a later round, be ready to name what you'd re-learn: pytest, pydantic, async/await idioms, SQLAlchemy vs Django ORM conventions, ruff/mypy toolchain.
 
 ### 3.5 Logistics questions — prepare exact answers
 
@@ -101,11 +123,12 @@ HR screens fail on vague logistics. Have one-line answers ready:
 
 | Question | How to answer |
 |---|---|
-| Work authorization | State it plainly: where you can work, current visa status, whether you need sponsorship. If the role is Remote and you need them to sponsor a German visa, say so now — surprises later kill offers. |
-| Notice period | Exact date you could start. German market norm is 3 months; if you have less, say it — it's a competitive advantage. |
-| Remote vs Berlin | They offer both. Know your preference and reason. If remote: confirm your time zone overlap with CET (their teams are global, so this is normal, but state your hours). |
+| Work authorization | You're an Indonesian citizen, currently employed by Careem (Dubai entity) remotely from Indonesia. For **Remote**: no sponsorship needed — ask how they contract (German entity + EOR, contractor, or local entity). For **Berlin**: you'd need a German work visa / EU Blue Card (salary threshold ~€48k+; a senior offer clears it) — say you're open to relocation, CV says so, and ask if they sponsor. State this plainly, no surprises later. |
+| Notice period | **Fill in exact number before the call.** Careem notice period + any leave accrued. Give an exact earliest-start date, e.g. "I can start [date]." An exact date reads as organized; "a couple of months" reads as vague. |
+| Remote vs Berlin | Decide your preference before the call and give one line + reason. Remote: "Remote from Indonesia works well — I already work with a Dubai-headquartered org across time zones; I can anchor [e.g., 14:00–22:00 WIB] for solid CET overlap." Relocation: "Open to relocating to Berlin — my CV says so." |
+| Time-zone overlap | WIB (UTC+7) is 5–6 hours behind CET. Jakarta afternoon 14:00–21:00 = Berlin morning 09:00–16:00 (summer). That's a full-day overlap. Preempt the worry; don't wait for them to raise it. |
 | Salary expectations | See §4. Have a number and a range. Never "I'm flexible" as a whole answer. |
-| Competing processes | It's fine to say you're in other processes; adds urgency if framed as demand. Optional. |
+| Competing processes | Fine to say you're in other processes; adds urgency if framed as demand. Optional. |
 | Other offers/deadlines | If real, mention — it speeds things up. |
 
 ### 3.6 "What do you know about us?"
@@ -116,30 +139,34 @@ Use §1 compressed to 30 seconds:
 
 ### 3.7 Behavioral softballs HR asks
 
-- **Strengths**: ownership + ambiguity → pick one story where you turned a vague problem into a shipped system (mirrors their "turn ambiguous problems into clear requirements" line).
-- **Weakness**: real but non-fatal, with a mitigation. E.g., "I go deep on technical elegance before checking business value — I now force an early written trade-off doc with stakeholders." Avoid fake weaknesses.
-- **Conflict/misalignment story**: have one STAR story ready where you challenged a requirement, proposed an alternative, and committed to the outcome — the post explicitly values "challenging requirements."
-- **Why senior, not staff**: scope story — you lead projects and influence direction, and you want maximum hands-on ownership of core systems, which is what "Senior Product Engineer" here means.
+- **Strengths**: ownership + turning ambiguity into shipped systems. Story: RRQ Guild — first engineer, no specs, no infra, shaped backend strategy with Head of Product and launched the platform 0→1. Or Telkom AI platform: vague org need ("we need internal AI") turned into a production multi-tenant platform. Both mirror the post's "turn ambiguous problems into clear requirements."
+- **Weakness**: real but non-fatal, with mitigation. E.g., "I go deep on technical elegance before checking business value — I now force an early written trade-off doc with stakeholders." Avoid fake weaknesses.
+- **Conflict / challenging requirements story**: pick one of — Board of Experts standardization where teams initially resisted new practices; or a Careem integration where a partner's proposed flow had a flaw you pushed back on. Structure: challenge → alternative proposed → committed to the outcome. The post explicitly values "challenging requirements" and "proposing alternative approaches."
+- **Mentoring story**: Telkom — mentored juniors on Go, clean architecture, observability. Outcome-framed.
+- **Why senior, not staff**: scope story — Board of Experts and platform ownership show org-level influence, and you want maximum hands-on ownership of core systems, which is what "Senior Product Engineer" here means.
+- **AI tooling question (likely, it's in the post)**: strongest card. You didn't just *use* AI tools — you built the platform others use: AI Proxy, MCP Orchestrator, AI-assisted GitLab MR reviewer, token-usage cost tracking. Frame: "I've been on both sides — building AI-assisted developer infrastructure and using it daily."
 
 ## 4. Salary: what to say
 
 No public levels.fyi/Glassdoor data specific to Distribusion was found. Use Berlin senior-engineer market rates as the anchor and label them as market data:
 
-- **Berlin senior backend (Series B–D, well-funded):** roughly **€80k–€110k base**, with equity. Top-of-band for strong senior/profile-match candidates reaches ~€115–120k. Remote contracts outside Germany are often structured differently (contractor or local-entity employment).
-- **If they ask first** (they usually do): give a range whose **bottom is a number you'd actually accept**:
+- **Berlin senior backend (Series B–D, well-funded), relocating to Berlin:** roughly **€80k–€110k base**, plus equity. Top-of-band for strong senior/profile-match candidates reaches ~€115–120k. EU Blue Card eligibility clears easily at this level.
+- **Remote from Indonesia:** different structure entirely. European companies typically contract via **EOR (Deel/Remote.com) with location-adjusted pay** or as a **B2B contractor**. Location-adjusted remote comp for senior roles in Indonesia commonly lands at **30–60% of the Berlin equivalent**, but strong remote-first companies pay closer to global bands. **Do not quote a Berlin number if staying remote** — anchor instead to your current Careem comp + uplift, and make contract structure an explicit question.
+- **If they ask first** (they usually do): give a range whose **bottom is a number you'd actually accept**, and if remote, make structure part of the answer:
 
-  > "Based on the Berlin market for senior backend engineers at this stage, I'm looking at roughly €[X]–€[Y] base, plus equity. I'm flexible on structure for the right role — what range is budgeted for this position?"
+  > "It depends on the structure — remote contract versus Berlin employment. For Berlin, market for senior backend at this stage is roughly €[X]–€[Y] base plus equity. For remote, I'd benchmark against my current total comp and the location structure you use. What's budgeted for this position?"
 
 - **If they push for one number**: give the bottom of your real range, not your dream number — the range gets negotiated down, the single number gets negotiated up.
-- **Ask in return**: "Is there a comp band for this level? Equity? Any location-based adjustment for remote?" — these are normal HR-stage questions.
-- Fill in X/Y from your current comp + target uplift (typical: +15–25% to switch, more if you're leaving equity or seniority on the table).
+- **Ask in return**: "Is there a comp band for this level? How does equity work — option pool, vesting? Do you adjust by location for remote, and via what mechanism — EOR or contractor?" — normal HR-stage questions.
+- Fill in X/Y from your current Careem total comp + target uplift (typical: +15–25% to switch; more if relocation to Berlin, where cost of living justifies the full band).
 
 ## 5. Risks to manage in the screen
 
-1. **Python gap** — prepare §3.4 cold. If HR flags it to the hiring manager, your answer determines whether you get a technical round.
+1. **Python depth** — softened: your CV shows FastAPI + FastMCP production work, but your large-scale production record is Go. Answer per §3.4: lead with production Python, then transferable-patterns argument, then commit to the ramp. Expect the hiring manager to probe deeper than HR does.
 2. **"Product engineer" is not "product manager"** — if the title confuses the conversation, clarify: engineering role with product accountability, building the operator-facing systems (IMS).
-3. **Time-zone / remote fit** — they're remote-first with global teams; preempt the "will you overlap with CET" worry with your working-hours commitment.
-4. **Know the difference between their two audiences**: they have a B2B API for retailers *and* internal/operator tools (IMS). This role is the operator side. Confusing these signals weak domain reading.
+3. **Remote structure and comp mismatch** — biggest practical risk if you stay in Indonesia. Berlin-band expectations against location-adjusted remote pay leads to stalled offers. Resolve contract mechanism (EOR vs contractor) and band early, in the very first screen.
+4. **Time-zone overlap** — preempts itself if you volunteer your CET-overlap hours (§3.5). Their teams are global and remote-first, so this is low-risk, but never make them raise it.
+5. **Know the difference between their two audiences**: they have a B2B API for retailers *and* internal/operator tools (IMS). This role is the operator side. Confusing these signals weak domain reading.
 
 ## 6. Questions to ask HR (pick 4–6)
 
@@ -165,15 +192,16 @@ Avoid asking anything answerable from the website.
 
 ## 7. HR-screen checklist (night before)
 
-- [ ] 90-second intro rehearsed, ends with why-this-role
-- [ ] Why-Distribusion answer: 3 hooks (allocation problem / 10x + Series C / DB tender & rail momentum)
-- [ ] Python answer ready with concrete ramp evidence
-- [ ] Exact notice period and earliest start date
-- [ ] Work authorization and remote/time-zone answer, one line each
-- [ ] Salary range with real bottom number
+- [ ] 90-second intro rehearsed (§3.1), ends with Tanihub-inventory → why-this-role
+- [ ] Why-Distribusion answer: 3 hooks (allocation problem mapped to Tanihub/Careem work / 10x + Series C / DB tender & rail momentum)
+- [ ] Python answer ready: FastAPI/FastMCP production evidence first (§3.4)
+- [ ] **Exact Careem notice period + earliest start date** — fill in before call
+- [ ] Work-auth one-liner: remote = no sponsorship, ask EOR/contractor structure; Berlin = relocation + Blue Card (§3.5)
+- [ ] Salary: two anchors ready — Berlin band vs remote-adjusted structure (§4)
 - [ ] Company numbers memorized: 250+ carriers, 2,000+ retailers, 70+ countries, $80M Series C (TQ Ventures, Sep 2024), 10x growth
 - [ ] 5 questions from §6 written down
 - [ ] Recruiter's name (Aulia) and quiet room, camera on, good audio
+- [ ] Check Aulia's and the hiring manager's LinkedIn before the call
 
 ## 8. Useful links
 
