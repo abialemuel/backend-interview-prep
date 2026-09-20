@@ -61,6 +61,7 @@ Tech signals from the post: **Python** backend, distributed systems, event-drive
 
 | Job post asks | Your evidence |
 |---|---|
+| B2B marketplace integration layer (their core product) | **Careem Enabler** — KSA partner onboarding, catalog sync, order lifecycle, promotions sync. Same system shape as carrier↔retailer integration: external partner APIs, eventual consistency, dropped event = money lost. Domain differs, architecture doesn't |
 | Seat allocation across stops, reallocation (swaps, merges) | **Tanihub FIFO stock reservation** — real-time shared inventory reservation at scale; nearest analog to seat inventory |
 | Event-driven reliability, retries, eventual consistency | **Careem CERT relay** — error classification, FIFO ordering gate, exponential backoff; fixed silent drop of regulated events |
 | AI-assisted development, tooling, self-service | **Telkom AI Proxy + MCP Orchestrator + AI MR reviewer** — you built exactly what the post wants "driven" |
