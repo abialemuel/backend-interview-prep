@@ -204,9 +204,9 @@ async def application(scope, receive, send):
 
 **Uvicorn** specifics worth knowing:
 
-- Runs an event loop per worker process. Typically deployed as `uvicorn --workers N app:app` or behind gunicorn with uvicorn workers (older pattern; uvicorn's own multi-worker mode is now standard).
-- One worker = one process = one loop = one core. Scale = worker count (CPU cores) × loop efficiency (I/O-bound requests).
-- `--loop uvloop` (libuv-based loop) gives a significant throughput boost over the default asyncio loop — standard in production.
+- Runs an event loop per worker process. For a container, a single Uvicorn process per container is a common starting point; Uvicorn also has a built-in `--workers N` option. A process manager such as Gunicorn is another deployment choice when its worker management features are useful.
+- One worker = one process with its own event loop. A worker can use more than one CPU core over time, but Python code that holds the GIL does not execute in parallel within that process. Set worker counts from measurements and resource limits, not a fixed one-worker-per-core formula.
+- `uvloop` is an optional libuv-based event loop that may improve performance for some workloads. Install the relevant Uvicorn extra and benchmark it; it is not a required production setting.
 
 ## Starlette: the foundation
 
@@ -435,16 +435,51 @@ Fix: `asyncio.Lock` around check-then-act, or make the operation atomic in the d
 
 ## Deployment shape
 
+For a containerized service, start with **one application process per container** and let the platform run more replicas. This makes memory and CPU limits predictable and lets Kubernetes, ECS, or another orchestrator handle placement and restarts. Multiple workers inside one container are still a valid option, but size them against the container's CPU *and memory* limits: each worker is a separate process and usually loads its own app state, connection pools, and in-memory models.
+
+An ASGI app must bind to a container-reachable interface (`0.0.0.0`), not just `127.0.0.1`. A straightforward production command is:
+
 ```bash
-uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 4 --loop uvloop
+uvicorn app.main:app --host 0.0.0.0 --port 8000
 ```
 
-- Each worker: one process, one loop, one core. `--workers` ≈ CPU core count.
-- Behind a reverse proxy (nginx/ALB) or a container orchestrator (K8s, with a per-pod worker count).
-- Health/readiness endpoints must **not** touch the DB loop-blocking; use async checks.
-- Graceful shutdown: lifespan `yield` exit runs on SIGTERM — close pools, drain tasks; Uvicorn stops accepting connections first.
+For a project managed by `uv`, a minimal container can install from the committed lockfile and run the app as PID 1:
 
-Mental model for capacity: async Python shines for **many concurrent slow-I/O requests** (thousands of waiting connections on one worker). It is **not** faster for CPU-bound work — for that, more processes, and since 3.14 optionally free-threaded builds.
+```dockerfile
+FROM python:3.14-slim
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PATH="/app/.venv/bin:$PATH"
+WORKDIR /app
+
+COPY --from=ghcr.io/astral-sh/uv:0.12.18 /uv /uvx /bin/
+COPY pyproject.toml uv.lock ./
+RUN uv sync --locked --no-dev --no-install-project
+COPY . .
+RUN uv sync --locked --no-dev
+
+RUN useradd --create-home --uid 10001 appuser
+USER 10001
+EXPOSE 8000
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+```
+
+This is an example, not a universal Dockerfile: pin the Python and uv images to approved versions or digests, add a `.dockerignore`, and make sure the project layout/package configuration matches the `uv sync` commands. Keep development and test dependencies out of the runtime image. Inject secrets at runtime from the platform's secret store; don't commit them or bake them into image layers.
+
+Deployment checks that prevent common failures:
+
+- **Configuration:** read environment variables or mounted secret files at startup, validate required settings, and fail fast with a clear error. Keep configuration separate from the image.
+- **Health:** make liveness report whether the process/event loop is alive. Make readiness report whether this instance can serve traffic; a bounded async dependency check may be appropriate there. A database outage should not cause liveness restarts that amplify the outage.
+- **Database changes:** run schema migrations as a release job or one-off task before shifting traffic, not independently from every web worker's startup hook. Make rollouts compatible with both old and new app versions while replicas overlap.
+- **Shutdown:** on `SIGTERM`, stop accepting new work, allow in-flight requests a bounded grace period, then close clients and connection pools in the ASGI lifespan shutdown. Set the platform's termination grace period longer than the server's graceful-shutdown timeout.
+- **Reverse proxies:** configure forwarded-header handling only for known proxy addresses/networks. Trusting forwarded headers from arbitrary clients allows spoofed client IPs and schemes. Terminate TLS at the load balancer or proxy unless the deployment has a specific end-to-end TLS requirement.
+- **Resource limits:** choose replicas and workers from measured CPU, memory, request latency, and connection-pool capacity. Four workers do not automatically mean four times the throughput: each is a process with separate memory and pools, and CPU-heavy work still needs separate capacity.
+
+If one container needs several worker processes, Uvicorn supports `--workers N`; for example, `uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 2`. Treat this as a measured tuning choice, not a rule that workers should equal CPU cores. `--loop uvloop` is also optional: install the extra and benchmark it in the target environment before selecting it. If using Gunicorn, install the separate `uvicorn-worker` package and use `uvicorn_worker.UvicornWorker`; Uvicorn's former `uvicorn.workers` import path is deprecated. Do not combine multiple layers of worker managers without a clear reason.
+
+Behind a reverse proxy or load balancer, configure timeouts, request body limits, and WebSocket forwarding as needed. The proxy should route only to ready instances. For capacity, async Python helps handle many concurrent I/O waits; it does not make CPU-bound work faster. Scale CPU-heavy work separately, often with a process pool or background workers, and keep expensive jobs off the request event loop.
+
+Further reading: [FastAPI deployment concepts](https://fastapi.tiangolo.com/deployment/concepts/), [FastAPI in containers](https://fastapi.tiangolo.com/deployment/docker/), [Uvicorn deployment](https://www.uvicorn.org/deployment/), and [uv in Docker](https://docs.astral.sh/uv/guides/integration/docker/).
 
 ---
 
