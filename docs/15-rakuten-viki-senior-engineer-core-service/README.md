@@ -67,11 +67,11 @@ Some loops compress stages 3–4 into a single 90-minute session, and some add a
 
 ### Likely HR questions
 
-- Timeline: notice period, earliest start, willingness to relocate (have a concrete date).
+- Timeline: notice period, earliest start, willingness to relocate (have a concrete date — verified SG reports show recruiters push back on anything over ~2 weeks and ask about commuting/hybrid logistics).
 - Current compensation and expectations — see salary section below; give a **monthly SGD base range**, ask about package structure (bonus, benefits, relocation).
 - Any other offers in flight (be honest, no games).
 - Visa status / EP sponsorship requirement — say it plainly: will need Employment Pass sponsorship and relocation support.
-- Hybrid/onsite expectations in Singapore.
+- Hybrid/onsite expectations in Singapore — one verified SG report cites ~20 remote working days in the benefits package; confirm current policy and ask what happens before permanent housing is secured.
 
 ### Questions to ask the recruiter
 

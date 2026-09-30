@@ -14,6 +14,8 @@ Glassdoor (company id `E694051`) and NodeFlair both carry candidate-submitted Ra
 | "I got some algorithm questions regarding sorting and practical API usage" | **Senior** Software Engineer | Glassdoor QTN_8639661 |
 | "I got asked what happens when I do a search in a browser" | **Senior** Software Engineer | Glassdoor QTN_8639662 |
 | Take-home: "Scrape Viki homepage to find duplicate content"; then "tech questions on web technologies — what would be the output of code snippet (recursive function)" | Full Stack Engineer | Glassdoor QTN_2004093 |
+| "Given a assignment to create application with specific functionality, good approach to understand skills but also time consuming task" | Associate SWE (SG) | Glassdoor SG QTN_6357017 |
+| "Why would you need more than 2 weeks to relocate — what difference would commuting 2 days instead of 3 in the first month make" (candidate notes 20 remote working days in benefits package) | Content Marketing (SG, relocation Q&A) | Glassdoor SG QTN_8352486 |
 | "Have you used Rakuten Viki before, and how the product could be improved" | HM round | Glassdoor QTN_7315639 |
 
 Aggregate stats (Glassdoor, 2025–2026 snapshots): ~53 interview questions / 51 reviews company-wide; Software Engineer interviews rated difficulty 2.8/5 with 50% positive experience; the SG-filtered page skews harsher (20% positive) — small sample. Structural takeaway that repeats across reports: **coding round + CS-fundamentals round (OS/DB/network) + hiring-manager round that probes product familiarity.** Prepare all three.
@@ -23,7 +25,8 @@ Practical consequences:
 1. **Use the Viki product before the HM round** — watch a show, notice the subtitle UX, the pass-locked episodes, the ads on free tier. The hiring-manager question is confirmed to be "have you used it and how would you improve it".
 2. **Rehearse the "what happens when you type a URL / search in a browser" walkthrough** — DNS → TCP/TLS → HTTP → CDN → browser rendering. Senior-level follow-ups: DNS resolution caching, TLS 1.3 handshake, CDN edge hit vs miss, HTTP/2 vs 3 ([04-aws networking](../04-aws/02-networking-and-databases.md), [06-system-design](../06-system-design/01-scalability-and-load-balancing.md)).
 3. **Refresh CS fundamentals** — heap vs stack memory layout, ACID properties ([03-databases/mysql](../03-databases/mysql/02-transactions-and-isolation.md)), TCP vs UDP (streaming relevance: video rides TCP/QUIC, why not raw UDP for HLS), sorting algorithm internals.
-4. The **take-home pattern exists** (scrape-for-duplicates style). If offered one, deliver a clean repo with tests, not a clever script.
+4. The **take-home pattern exists** — confirmed twice (scrape-for-duplicates for Full Stack; build-an-application assignment for Associate SWE). If offered one, deliver a clean repo with tests and a README, not a clever script.
+5. **Relocation gets probed hard in SG rounds** — a verified SG report shows pushback on a 2-week relocation timeline and questions about commuting/hybrid days (benefits package included ~20 remote working days). Have a realistic relocation date ready, ask for the hybrid policy explicitly, and negotiate temporary housing rather than asking to delay start.
 
 ## Coding rounds
 
