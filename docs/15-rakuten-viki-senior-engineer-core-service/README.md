@@ -2,7 +2,7 @@
 
 Targeted preparation pack for the **Senior Engineer, Core Service** role at Rakuten Viki (Singapore, relocation role). The Codility online assessment is already done — this pack covers every remaining stage: HR screen, technical coding rounds, system design, and the hiring-manager/behavioral loop.
 
-> **Evidence note:** Rakuten Viki does not publish its engineering interview process. The stage map below combines public candidate reports (NodeFlair interview reports, common Codility-loop patterns for SG companies) with clearly labeled estimates. Salary figures are listing/community data, not a guaranteed offer. Verify specifics with the recruiter.
+> **Evidence note:** Rakuten Viki does not publish its engineering interview process, but **Glassdoor carries real candidate reports for company id E694051** (53 questions / 51 reviews as of 2026), mined via search-indexed question pages since the site itself is login/Cloudflare-walled. The stage map and question bank combine that verified data with NodeFlair's 39 candidate reports. The full loop count for this specific role is still an estimate — verify with the recruiter. Salary figures are listing/community data, not a guaranteed offer.
 
 ---
 
@@ -40,9 +40,9 @@ The interview-relevant common denominator: **high-read-volume APIs, caching, low
 |---|-------|----------------------|
 | 1 | Codility online assessment | ✅ Done |
 | 2 | HR / recruiter screen (~30 min) | **Next.** Motivation, background, salary, relocation logistics. See HR screen below |
-| 3 | Technical coding round(s) (~60 min each) | Live coding, algorithm/data-structure problems. Reported company questions are scheduler/load-balancer flavored — see [interview questions](03-interview-questions.md) |
-| 4 | System design round (~60 min) | Senior-level backend design, very likely streaming-adjacent — see [system design](02-system-design.md) |
-| 5 | Hiring manager / behavioral | Team fit, past project deep dives, ways of working (estimated stage) |
+| 3 | Technical coding round(s) (~60 min each) | Live coding — **Glassdoor-verified topics**: round-robin/weighted load balancer implementations, sorting, "practical API usage". Some loops add a **CS-fundamentals round** (OS: heap/stack; DB: ACID; networking: TCP/IP vs UDP) — see [interview questions](03-interview-questions.md) |
+| 4 | System design round (~60 min) | Senior-level backend design; verified senior questions include the browser-search walkthrough — see [system design](02-system-design.md) |
+| 5 | Hiring manager / behavioral | **Verified HM question: "Have you used Rakuten Viki before, and how would you improve the product?"** — use the product before this round. Plus team fit and past-project deep dives |
 | 6 | Offer + relocation logistics | Salary, EP sponsorship, relocation package, start date |
 
 Some loops compress stages 3–4 into a single 90-minute session, and some add a take-home or a second design round. Ask the recruiter for the exact loop map — candidates are entitled to know how many rounds and who sits on each.
@@ -87,10 +87,11 @@ Some loops compress stages 3–4 into a single 90-minute session, and some add a
 |--------|--------|
 | NodeFlair user submissions — Software Engineer, Senior | avg **S$9,450/mo**, range S$8,500–S$10,400 |
 | NodeFlair — MyCareersFuture historical listing data | S$6,545–S$11,909/mo |
+| Glassdoor SG — Software Engineer (28 submissions, all levels, Jan 2026) | avg S$7,000/mo |
 | NodeFlair — Software Engineer, Mid (reference) | avg S$7,500/mo (S$7,000–S$8,000) |
 | NodeFlair — Software Engineer, Junior (reference) | avg S$6,043/mo (S$5,000–S$6,500) |
 
-Positioning: with 8+ years, a current senior role at Careem (Uber), and a relocation package in play, quote **S$10,000–S$11,000/mo base** as the target, settle anchored at S$9,500+. NodeFlair company reviews rate Viki compensation at 3.6/5 (the weakest category vs 4.1 overall) — expect the company to manage costs and be ready to negotiate on total package (bonus, Viki Pass perks, relocation value, AWS/cert budget) rather than base alone. Employment Pass approvals for senior roles typically require qualifying salaries well above the S$5,600 minimum (Jan 2025 baseline, higher with age via COMPASS) — a sub-S$9,000 offer for a relocated senior is below market; treat that as a data point in negotiation.
+Positioning: with 8+ years, a current senior role at Careem (Uber), and a relocation package in play, quote **S$10,000–S$11,000/mo base** as the target, settle anchored at S$9,500+. NodeFlair company reviews rate Viki compensation at 3.6/5 (the weakest category vs 4.1 overall), and Glassdoor's all-level SWE average of S$7,000/mo reinforces the picture of a cost-managed comp stack — be ready to negotiate on total package (bonus, Viki Pass perks, relocation value, AWS/cert budget) rather than base alone. Employment Pass approvals for senior roles typically require qualifying salaries well above the S$5,600 minimum (Jan 2025 baseline, higher with age via COMPASS) — a sub-S$9,000 offer for a relocated senior is below market; treat that as a data point in negotiation.
 
 ## Relocation and Employment Pass quick facts
 
@@ -132,5 +133,7 @@ Positioning: with 8+ years, a current senior role at Careem (Uber), and a reloca
 - [Rakuten Viki site](https://www.viki.com/)
 - [Rakuten Viki — Wikipedia](https://en.wikipedia.org/wiki/Rakuten_Viki) (history, acquisition, scale figures)
 - [NodeFlair — Rakuten Viki salaries](https://nodeflair.com/companies/rakuten-viki/salaries) and [interview reports](https://nodeflair.com/companies/rakuten-viki/interviews)
+- [Glassdoor — Rakuten Viki interview questions](https://www.glassdoor.com/Interview/Rakuten-Viki-Interview-Questions-E694051.htm) (login-walled; indexed question pages: [verified senior SWE questions](https://www.glassdoor.com/Interview/I-got-some-algorithm-questions-regarding-sorting-and-practical-API-usage-QTN_8639661.htm), [coding + fundamentals report](https://www.glassdoor.com/Interview/Coding-Round-Given-servers-and-requests-represented-by-string-arrays-implement-round-robin-load-balancer-Follow-up-quest-QTN_7315639.htm))
+- [Glassdoor SG — Rakuten Viki Software Engineer salaries](https://www.glassdoor.sg/Salary/Rakuten-Viki-Software-Engineer-Salaries-E694051_D_KO13,30.htm)
 - [MOM Employment Pass — qualifying salary](https://www.mom.gov.sg/passes-and-permits/employment-pass/eligibility)
 - [Viki careers presence on LinkedIn](https://www.linkedin.com/company/rakuten-viki/) — check posters and recent posts before each call

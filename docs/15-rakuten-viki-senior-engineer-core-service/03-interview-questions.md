@@ -2,15 +2,38 @@
 
 Graded question bank for the remaining loop. The coding section is weighted heaviest because the next live round after Codility will almost certainly be algorithmic live coding.
 
+## Verified interview evidence (Glassdoor + NodeFlair)
+
+Glassdoor (company id `E694051`) and NodeFlair both carry candidate-submitted Rakuten Viki interview data. Glassdoor's interview pages are Cloudflare-walled, but individual question pages are search-indexed — the question text below is quoted from those indexed pages, so treat it as **verified candidate reports**, not speculation.
+
+| Reported question (verbatim or near-verbatim) | Role | Source |
+|-----------------------------------------------|------|--------|
+| "Coding Round: Given servers and requests represented by string arrays, implement round robin load balancer. Follow up question was to implement weighted round robin load balancer." | SWE Intern | Glassdoor QTN_7315639 |
+| Same report continues: "OS questions tested on heap stack etc, DB on ACID, Networking on TCP/IP and UDP. Hiring manager round asked if you have used Rakuten Viki before, and how the product is [improved]…" | SWE Intern | Glassdoor QTN_7315639 |
+| "Database, Networking, and Operating Systems" (a dedicated CS-fundamentals round) | SWE Internship | Glassdoor QTN_8648974 |
+| "I got some algorithm questions regarding sorting and practical API usage" | **Senior** Software Engineer | Glassdoor QTN_8639661 |
+| "I got asked what happens when I do a search in a browser" | **Senior** Software Engineer | Glassdoor QTN_8639662 |
+| Take-home: "Scrape Viki homepage to find duplicate content"; then "tech questions on web technologies — what would be the output of code snippet (recursive function)" | Full Stack Engineer | Glassdoor QTN_2004093 |
+| "Have you used Rakuten Viki before, and how the product could be improved" | HM round | Glassdoor QTN_7315639 |
+
+Aggregate stats (Glassdoor, 2025–2026 snapshots): ~53 interview questions / 51 reviews company-wide; Software Engineer interviews rated difficulty 2.8/5 with 50% positive experience; the SG-filtered page skews harsher (20% positive) — small sample. Structural takeaway that repeats across reports: **coding round + CS-fundamentals round (OS/DB/network) + hiring-manager round that probes product familiarity.** Prepare all three.
+
+Practical consequences:
+
+1. **Use the Viki product before the HM round** — watch a show, notice the subtitle UX, the pass-locked episodes, the ads on free tier. The hiring-manager question is confirmed to be "have you used it and how would you improve it".
+2. **Rehearse the "what happens when you type a URL / search in a browser" walkthrough** — DNS → TCP/TLS → HTTP → CDN → browser rendering. Senior-level follow-ups: DNS resolution caching, TLS 1.3 handshake, CDN edge hit vs miss, HTTP/2 vs 3 ([04-aws networking](../04-aws/02-networking-and-databases.md), [06-system-design](../06-system-design/01-scalability-and-load-balancing.md)).
+3. **Refresh CS fundamentals** — heap vs stack memory layout, ACID properties ([03-databases/mysql](../03-databases/mysql/02-transactions-and-isolation.md)), TCP vs UDP (streaming relevance: video rides TCP/QUIC, why not raw UDP for HLS), sorting algorithm internals.
+4. The **take-home pattern exists** (scrape-for-duplicates style). If offered one, deliver a clean repo with tests, not a clever script.
+
 ## Coding rounds
 
-**What to expect.** A Codility-style live session: one to two problems in 45–60 minutes, in your best language (Go), with the interviewer watching for problem decomposition, edge cases, and testing discipline. Publicly reported Rakuten Viki questions on NodeFlair include implementing a **round-robin load balancer** and a **weighted round-robin load balancer** — scheduler/distribution-flavored problems. Expect medium LeetCode difficulty, occasionally design-a-class style.
+**What to expect.** A Codility-style live session: one to two problems in 45–60 minutes, in your best language (Go), with the interviewer watching for problem decomposition, edge cases, and testing discipline. Glassdoor-verified Rakuten Viki questions are scheduler/load-balancer flavored (round-robin and weighted round-robin from string arrays) plus **sorting and practical API usage** at senior level. Expect medium LeetCode difficulty, occasionally design-a-class style.
 
-### Q1 (reported pattern): Implement a round-robin load balancer
+### Q1 (Glassdoor-verified): Implement a round-robin load balancer
 
 Given servers and a stream of requests, each request goes to the next server in cycle. Model answer in Go: an atomic counter over a fixed server list; `next := atomic.AddUint64(&i, 1) % len(servers)`. Discuss: O(1) per dispatch, no shared mutable state beyond the counter, behavior when a server is added/removed mid-flight (rebuild list, counter mod changes — mention consistent hashing as the upgrade path, see [consistent hashing](../13-distributed-systems/02-replication-and-partitioning.md)).
 
-### Q2 (reported pattern): Implement a weighted round-robin load balancer
+### Q2 (Glassdoor-verified follow-up): Implement a weighted round-robin load balancer
 
 Same surface, each server has a weight. Two clean answers:
 
@@ -40,6 +63,7 @@ Write a worker pool with graceful shutdown (`context.Context`, `sync.WaitGroup`,
 ### Practice list (2–3 days)
 
 - Weighted/round-robin schedulers, rate limiter, LRU/LFU with TTL
+- Sorting internals (quicksort/mergesort trade-offs, stability) — verified senior-level topic
 - Interval problems (merge/insert/room scheduling)
 - Top-K / heaps (trending titles), sliding window
 - String processing (subtitle/text transforms — parsing, matching)
@@ -78,6 +102,8 @@ Subtitle track = versioned immutable object → CDN edge, content-hashed URLs. W
 STAR answers, anchored to your real stories; see [08-behavioral](../08-behavioral/README.md).
 
 - **Why Viki / why this role** — use the drafted answer in [README](README.md); connect Core Service platform work to Telkom AI Proxy and Careem CERT.
+- **"Have you used Rakuten Viki, and how would you improve it?"** (verified HM question) — use the product beforehand; bring one specific, technically-grounded improvement (e.g., playback start time, subtitle discovery, pass-gating UX).
+- **Long-term career aspirations** — reported HR-round question; answer with senior→lead growth in a product team, relocation as commitment.
 - **Why Singapore / relocation readiness** — concrete start date, prior international-team experience, long-term commitment.
 - **A production failure you owned** — CERT relay silent-event-loss elimination: detection (metrics gap), fix (error classification, retries, ordering gate), result (zero silent drops).
 - **Conflict or influence without authority** — backend standards work at Careem; frame as persuasion with evidence, not mandate.
