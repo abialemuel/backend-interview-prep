@@ -29,8 +29,7 @@ Each topic is organized into:
 | [Security & Auth](12-security-and-auth/README.md) | Sessions, JWT, OAuth2/OIDC, OWASP, passkeys |
 | [Distributed Systems](13-distributed-systems/README.md) | Consensus, replication, clocks, correctness in practice |
 | [AI & LLM Integration](14-ai-llm-integration/README.md) | LLM APIs, RAG, vector search, LLMs in production |
-| [SRE / Observability Role Prep](15-sre-observability-role/README.md) | JD-mapped prep: Datadog admin, K8s/AWS/CI-CD observability integration, Python ops scripting |
-| [Screening Eagle / Senior Backend Engineer Prep](16-screening-eagle-senior-backend-engineer-role/README.md) | HR screen, salary research, INSPECT product context, CV-to-JD mapping, and technical interview preparation |
+| [Rakuten Viki / Senior Engineer, Core Service Prep](15-rakuten-viki-senior-engineer-core-service/README.md) | Post-Codility stage map, HR screen, salary research, relocation/EP prep, system design, and graded interview Q&A |
 
 ## Keeping content current
 

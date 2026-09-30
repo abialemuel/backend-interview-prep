@@ -14,3 +14,6 @@ PROGRESS.md
 # MkDocs build output
 site/
 .cache/
+
+# Local virtualenv
+.venv/
