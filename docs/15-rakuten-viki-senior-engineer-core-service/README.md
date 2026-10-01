@@ -114,7 +114,7 @@ Positioning: with 8+ years, a current senior role at Careem (Uber), and a reloca
 
 1. Re-read [API Design](../11-api-design/README.md) — pagination, versioning, idempotency keys, rate limiting. Core Service is API work first.
 2. Work through [System Design](../06-system-design/README.md) — caching and microservices especially; then [02-system-design.md](02-system-design.md) in this pack.
-3. Code daily in Go: scheduling/LB problems, then the graded list in [03-interview-questions.md](03-interview-questions.md).
+3. Code daily in Go: scheduling/LB problems, then the graded list in [03-interview-questions.md](03-interview-questions.md) with the spoken model answers in [04-model-answers.md](04-model-answers.md).
 4. Skim [13-distributed-systems](../13-distributed-systems/README.md) — exactly-once, idempotency, locks. Senior follow-ups live here.
 5. Rehearse the two drafted answers and three anchor stories aloud ([Behavioral](../08-behavioral/README.md)).
 

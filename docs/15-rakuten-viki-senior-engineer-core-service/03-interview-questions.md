@@ -1,6 +1,6 @@
 # Rakuten Viki Interview Questions — Coding, Design, Behavioral
 
-Graded question bank for the remaining loop. The coding section is weighted heaviest because the next live round after Codility will almost certainly be algorithmic live coding.
+Graded question bank for the remaining loop. The coding section is weighted heaviest because the next live round after Codility will almost certainly be algorithmic live coding. Spoken-style model answers for the verified questions live in [04-model-answers.md](04-model-answers.md).
 
 ## Verified interview evidence (Glassdoor + NodeFlair)
 
