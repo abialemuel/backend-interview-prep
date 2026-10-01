@@ -30,6 +30,7 @@ Each topic is organized into:
 | [Distributed Systems](13-distributed-systems/README.md) | Consensus, replication, clocks, correctness in practice |
 | [AI & LLM Integration](14-ai-llm-integration/README.md) | LLM APIs, RAG, vector search, LLMs in production |
 | [Rakuten Viki / Senior Engineer, Core Service Prep](15-rakuten-viki-senior-engineer-core-service/README.md) | Post-Codility stage map, HR screen, salary research, relocation/EP prep, system design, and graded interview Q&A |
+| [VSL Global / Fullstack + GenAI Engineer Prep](16-vsl-global-fullstack-genai-engineer/README.md) | CEO and CTO first call, introduction, project stories, voice/video pipeline design, and questions to ask |
 
 ## Keeping content current
 

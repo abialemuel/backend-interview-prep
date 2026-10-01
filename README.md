@@ -47,7 +47,9 @@ backend-interview-prep/
     ├── 11-api-design/                 ← REST, gRPC, GraphQL, idempotency, rate limiting
     ├── 12-security-and-auth/          ← sessions, JWT, OAuth2/OIDC, OWASP
     ├── 13-distributed-systems/        ← consensus, replication, clocks, correctness
-    └── 14-ai-llm-integration/         ← LLM APIs, RAG, vector search, production LLM systems
+    ├── 14-ai-llm-integration/         ← LLM APIs, RAG, vector search, production LLM systems
+    ├── 15-rakuten-viki-senior-engineer-core-service/ ← Rakuten Viki role preparation
+    └── 16-vsl-global-fullstack-genai-engineer/ ← VSL CEO and CTO interview preparation
 ```
 
 ## How to Use
@@ -74,6 +76,8 @@ backend-interview-prep/
 | 12 | Security & Auth | AppSec, identity | sessions, JWT, OAuth2/OIDC, passkeys, OWASP, Q&A |
 | 13 | Distributed Systems | Theory + practice | consensus, replication, partitioning, locks, retries, Q&A |
 | 14 | AI & LLM | LLM integration | LLM APIs, RAG, vector search, guardrails, cost control, Q&A |
+| 15 | [Rakuten Viki Prep](docs/15-rakuten-viki-senior-engineer-core-service/README.md) | Senior Engineer, Core Service | Interview stages, model answers, salary, and relocation |
+| 16 | [VSL Global Prep](docs/16-vsl-global-fullstack-genai-engineer/README.md) | Fullstack + GenAI Engineer | CEO and CTO first call, project stories, voice/video pipeline design, and questions to ask |
 
 ## Contributing / Extending
 
