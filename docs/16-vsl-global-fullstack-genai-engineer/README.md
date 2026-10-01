@@ -1,6 +1,8 @@
 # VSL Global — Fullstack + GenAI Engineer Interview Prep
 
-Preparation for a first conversation with VSL's CEO and CTO.
+Preparation for Abia Darma Lemuel's first conversation with VSL's CEO and CTO, tailored to **Abia New CV.pdf**.
+
+Start with the introduction below, then rehearse the [model answers](01-model-answers.md) and [project stories](02-project-stories.md). The answers are rehearsal drafts based on the CV; use only details you can explain from your own work.
 
 ## Understand the product
 
@@ -10,21 +12,33 @@ The engineering opportunity is broader than calling a voice model: it is buildin
 
 Useful links: [VSL website](https://www.vslglobal.ai/), [VSL use cases](https://www.vslglobal.ai/use-cases), [VSL privacy policy](https://www.vslglobal.ai/privacy-policy).
 
+## Your fit for the role
+
+Position yourself as a **senior backend and AI platform engineer with experience building products from scratch**. Your most relevant evidence is Telkom's production AI platform, Careem's integration reliability, and your first-engineer role at RRQ.
+
+| VSL requirement | Evidence in your CV | How to explain the connection |
+|---|---|---|
+| Build core features with the CTO | First engineer at RRQ; built its backend from zero alongside the Head of Products and Tech Advisor | You have worked with a small leadership team, made technical decisions, and shipped a product |
+| Go and Python | Go is your primary language; Python, FastAPI, and FastMCP are listed | Lead with your Go depth; prepare a concrete Python example before claiming equal depth |
+| Production GenAI | Built Telkom's AI Proxy and MCP Orchestrator powering TelkomGPT, with LLM, vision, and embedding model support | You have operated AI integrations beyond a prototype |
+| Enterprise reliability | Careem CERT relay: error classification, SQS FIFO retries, ordering gate, exponential backoff | You can handle failed, expensive, asynchronous processing with explicit state and recovery |
+| Tenant isolation and technical continuity | Telkom RBAC, observability, token usage tracking, backend standards, and mentoring | You understand how to make a shared platform maintainable and operable |
+| Fullstack JS/TS | JavaScript/TypeScript and frontend delivery are not documented in this CV | Discuss any real examples you have; describe your current depth precisely |
+| TTS, audio, and video | These workflows are not documented in this CV | Explain the relevant AI and systems experience, then acknowledge the media-specific learning needed |
+
 ## 60-second introduction
 
-Personalize the bracketed parts with accurate examples from your experience:
-
-> I'm a software engineer focused on building **[systems or products you have worked on]**. My strongest experience is in **[languages and areas]**. I enjoy owning features end to end: understanding the user need, designing the data flow and API, implementing it, and making it reliable in production.
+> I'm Abia, a senior software engineer with over eight years of experience building backend and distributed systems. Go is my strongest language, and I've worked across e-commerce, telecom, and Careem.
 >
-> I'm interested in VSL because localisation brings together a clear customer problem and challenging engineering across software, AI providers, and media workflows. I can contribute my experience in **[relevant experience]**, and I'm keen to deepen my hands-on work with voice and video pipelines.
+> At Telkom, I built an AI Proxy and MCP Orchestrator from scratch for TelkomGPT, supporting language, vision, and embedding models across multiple business units. At Careem, I've delivered a restaurant-network integration and built a reliability layer for a government event relay.
+>
+> I've also been the first engineer at RRQ, where I built the backend platform from zero. That combination of AI integration, production reliability, and early product ownership is what I would bring to VSL. I'm interested in applying it to your localisation workflow and developing deeper hands-on experience with voice and video.
 
-If you have not shipped voice or video in production, be direct:
-
-> I haven't shipped a production voice or video pipeline yet. My closest relevant experience is **[specific adjacent work]**. I understand the engineering concerns: large media files, long-running jobs, provider variability, retries, and reviewable outputs. I can contribute on the product and backend side while learning the media-specific details.
+If they ask about direct voice and video experience, use the answer in [GenAI and media experience](01-model-answers.md#what-experience-do-you-have-with-voice-tts-and-video). The CV does not establish that experience; any additional side projects should be described separately and accurately.
 
 ## Questions to practise
 
-Prepare a specific example for each. Use situation, your actions, the result, and what you learned.
+Use the [CV-based model answers](01-model-answers.md) to practise. Lead with a direct answer, give one concrete example, and explain its relevance to VSL.
 
 - Tell us about yourself and why VSL?
 - What have you built end to end?
@@ -35,7 +49,7 @@ Prepare a specific example for each. Use situation, your actions, the result, an
 - How do you work independently and keep a remote team informed?
 - What would you focus on during your first month?
 
-For your strongest project, be ready to explain the architecture, your individual contribution, one difficult trade-off, a failure you handled, and a measurable result.
+Use [Telkom's AI platform](02-project-stories.md#telkom-ai-proxy-and-mcp-orchestrator) for AI integration, [Careem's CERT relay](02-project-stories.md#careem-cert-event-relay) for reliability, and [RRQ](02-project-stories.md#rrq-first-engineer-and-product-launch) for builder ownership. The CV's **~80% memory reduction belongs to Telkom's network-monitoring architecture change**, not the AI platform.
 
 ## Technical discussion: localised video pipeline
 
@@ -51,11 +65,26 @@ If asked to design a workflow that takes an uploaded video and produces a dubbed
 
 Trade-offs worth discussing: synchronous versus asynchronous work, retrying versus failing fast, provider portability versus provider-specific features, and automated quality checks versus human review.
 
+Tie this proposed design to your background: Telkom gives you experience integrating models and enforcing access controls; Careem gives you experience classifying failures and recovering ordered work. Describe the video architecture as a proposal, rather than a pipeline you have already built.
+
+## Media concepts to understand before the call
+
+- **ASR/transcription:** turn speech into text, ideally with timestamps. Speaker diarisation identifies who spoke when; it is distinct from transcribing the words.
+- **Translation and localisation:** preserve meaning, terminology, and delivery while fitting the available speaking time. A grammatically correct translation may still be too long for the original segment.
+- **TTS:** generate speech from text. Assess pronunciation, voice consistency, prosody, and duration. A general LLM evaluation does not establish audio quality.
+- **Dubbing:** coordinate translated speech, speaker assignments, timing, and the original soundtrack. TTS is one component of the workflow.
+- **Lip-sync:** adjust visual mouth movement to match speech. Face visibility, multiple speakers, scene changes, and visual artefacts affect the result.
+- **Media processing:** tools such as FFmpeg can extract, resample, transcode, and combine streams. Re-encoding may be necessary when changing formats or combining incompatible assets.
+- **Quality review:** measure timing and technical output validity, and use language reviewers to assess meaning, pronunciation, and naturalness. Keep corrections linked to the asset version being reviewed.
+
+Be ready to explain these concepts; reading this section alone does not establish hands-on experience.
+
 ## Questions to ask the CEO and CTO
 
 Choose three or four that fit the conversation:
 
 - What would you like this person to ship in the first 60 or 90 days?
+- Given my background in backend and AI platforms, how would you divide this role between frontend delivery, orchestration, and media processing?
 - Where is the biggest engineering bottleneck today: workflow orchestration, provider integrations, media processing, or the user experience?
 - How do you measure output quality across languages and providers?
 - How do you handle long-running jobs, retries, and recovery when a pipeline stage fails?
@@ -66,10 +95,11 @@ Choose three or four that fit the conversation:
 
 ## Last review before the call
 
-- Rehearse the introduction and two project stories out loud.
-- Keep notes on your examples, the questions you want to ask, and areas you are still learning.
-- Be specific about your own contribution and candid about gaps.
-- Keep answers direct, then add technical detail when they ask for it.
+1. **20 minutes:** rehearse the introduction, why VSL, and your precise JS/TS and voice/video experience.
+2. **40 minutes:** rehearse Telkom AI, Careem CERT, and RRQ stories. Prepare the architecture and your individual contribution for each.
+3. **30 minutes:** explain the proposed video pipeline and the media concepts above out loud.
+4. **20 minutes:** prepare three questions for them, your availability, and your actual reason for considering a move from Careem.
+5. **10 minutes:** check microphone, camera, connection, and call details. Keep a one-page set of notes within reach.
 
 ## Company references
 
