@@ -31,6 +31,7 @@ Each topic is organized into:
 | [AI & LLM Integration](14-ai-llm-integration/README.md) | LLM APIs, RAG, vector search, LLMs in production |
 | [Rakuten Viki / Senior Engineer, Core Services Prep](15-rakuten-viki-senior-engineer-core-service/README.md) | Codility passed: recruiter and hiring-manager fit interviews, CV-based answers, project stories, relocation, and rehearsal |
 | [VSL Global / Fullstack + GenAI Engineer Prep](16-vsl-global-fullstack-genai-engineer/README.md) | CEO and CTO first call, introduction, project stories, voice/video pipeline design, and questions to ask |
+| [Talabat / Backend Engineer HR Interview Prep](17-talabat-backend-engineer-hr-interview/README.md) | CV-based HR answers, Careem delivery-domain stories, XP/TDD/pairing culture, ownership, mentoring, and rehearsal |
 
 ## Keeping content current
 
