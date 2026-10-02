@@ -1,6 +1,6 @@
 # Rakuten Viki Interview Questions — Coding, Design, Behavioral
 
-Graded question bank for the remaining loop. The coding section is weighted heaviest because the next live round after Codility will almost certainly be algorithmic live coding. Spoken-style model answers for the verified questions live in [04-model-answers.md](04-model-answers.md).
+Historical technical practice based on candidate reports from other hiring processes. Your recruiter has confirmed progressive **TA and hiring-manager fit interviews in either order**, so prioritize the [recruiter guide](01-recruiter-exploratory-call.md) and [manager guide](05-hiring-manager-fit.md). A live coding round has not been confirmed for your next step. Technical practice answers remain in [04-model-answers.md](04-model-answers.md).
 
 ## Verified interview evidence (Glassdoor + NodeFlair)
 
@@ -22,15 +22,15 @@ Aggregate stats (Glassdoor, 2025–2026 snapshots): ~53 interview questions / 51
 
 Practical consequences:
 
-1. **Use the Viki product before the HM round** — watch a show, notice the subtitle UX, the pass-locked episodes, the ads on free tier. The hiring-manager question is confirmed to be "have you used it and how would you improve it".
+1. **Explore Viki before the HM round if accessible** — notice browsing, subtitles, content availability, and subscription messaging. Product familiarity appears in a historical candidate report; that does not confirm this question for your interview.
 2. **Rehearse the "what happens when you type a URL / search in a browser" walkthrough** — DNS → TCP/TLS → HTTP → CDN → browser rendering. Senior-level follow-ups: DNS resolution caching, TLS 1.3 handshake, CDN edge hit vs miss, HTTP/2 vs 3 ([04-aws networking](../04-aws/02-networking-and-databases.md), [06-system-design](../06-system-design/01-scalability-and-load-balancing.md)).
 3. **Refresh CS fundamentals** — heap vs stack memory layout, ACID properties ([03-databases/mysql](../03-databases/mysql/02-transactions-and-isolation.md)), TCP vs UDP (streaming relevance: video rides TCP/QUIC, why not raw UDP for HLS), sorting algorithm internals.
 4. The **take-home pattern exists** — confirmed twice (scrape-for-duplicates for Full Stack; build-an-application assignment for Associate SWE). If offered one, deliver a clean repo with tests and a README, not a clever script.
-5. **Relocation gets probed hard in SG rounds** — a verified SG report shows pushback on a 2-week relocation timeline and questions about commuting/hybrid days (benefits package included ~20 remote working days). Have a realistic relocation date ready, ask for the hybrid policy explicitly, and negotiate temporary housing rather than asking to delay start.
+5. **Prepare relocation facts** — one report from a different role mentions relocation timing and remote days. It does not establish a two-week requirement or Viki's current policy. Use your real notice period and ask about working arrangements, sponsorship, and relocation support.
 
 ## Coding rounds
 
-**What to expect.** A Codility-style live session: one to two problems in 45–60 minutes, in your best language (Go), with the interviewer watching for problem decomposition, edge cases, and testing discipline. Glassdoor-verified Rakuten Viki questions are scheduler/load-balancer flavored (round-robin and weighted round-robin from string arrays) plus **sorting and practical API usage** at senior level. Expect medium LeetCode difficulty, occasionally design-a-class style.
+**Optional practice if a coding interview is subsequently scheduled.** Historical reports include scheduler/load-balancer problems, sorting, and practical API usage. Your recruiter has not confirmed a coding session, its duration, or difficulty for the upcoming fit rounds.
 
 ### Q1 (Glassdoor-verified): Implement a round-robin load balancer
 
@@ -96,7 +96,7 @@ Layer-by-layer: CDN (purge by key/soft TTL), Redis (explicit invalidation messag
 
 Thundering herd on the single hot catalog/entitlement key (request coalescing, pre-warm before drop), origin DB read spike (cache warm >95% target), CDN egress surge (fine — that is its job), player beacon flood (queue + backpressure). Answer with the load ladder from [06-system-design/01-scalability-and-load-balancing.md](../06-system-design/01-scalability-and-load-balancing.md).
 
-### Q6: Design subtitle delivery in 200+ languages
+### Q6: Design subtitle delivery across many languages
 
 Subtitle track = versioned immutable object → CDN edge, content-hashed URLs. Write path: community submission → moderation state machine (event-driven, idempotent consumers) → publish event invalidates nothing (new version = new URL). Mention endangered-language scale is tiny but governance matters — shows product empathy.
 
@@ -104,12 +104,12 @@ Subtitle track = versioned immutable object → CDN edge, content-hashed URLs. W
 
 STAR answers, anchored to your real stories; see [08-behavioral](../08-behavioral/README.md).
 
-- **Why Viki / why this role** — use the drafted answer in [README](README.md); connect Core Service platform work to Telkom AI Proxy and Careem CERT.
+- **Why Viki / why this role** — use the drafted answers in the [recruiter guide](01-recruiter-exploratory-call.md); connect Core Services ownership to Telkom, RRQ, and Careem.
 - **"Have you used Rakuten Viki, and how would you improve it?"** (verified HM question) — use the product beforehand; bring one specific, technically-grounded improvement (e.g., playback start time, subtitle discovery, pass-gating UX).
 - **Long-term career aspirations** — reported HR-round question; answer with senior→lead growth in a product team, relocation as commitment.
 - **Why Singapore / relocation readiness** — concrete start date, prior international-team experience, long-term commitment.
-- **A production failure you owned** — CERT relay silent-event-loss elimination: detection (metrics gap), fix (error classification, retries, ordering gate), result (zero silent drops).
-- **Conflict or influence without authority** — backend standards work at Careem; frame as persuasion with evidence, not mandate.
+- **A production reliability problem** — CERT relay: error classification, retries, and ordering gate addressed silent event drops. Prepare the actual detection method and validation evidence; the CV does not specify a metrics gap or prove zero loss under every condition.
+- **Conflict or influence without authority** — backend standards and mentoring are documented at Telkom. Prepare a real example of disagreement or persuasion.
 - **Efficiency win** — Telkom monitoring rebuild: stateless autoscaled Go, ~80% memory reduction; frame as ownership plus measurable result.
 - **Mentorship** — how you level up engineers; ties to senior-level expectations in the loop.
 

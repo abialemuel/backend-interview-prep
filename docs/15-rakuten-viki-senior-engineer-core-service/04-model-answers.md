@@ -1,6 +1,6 @@
 # Model Answers — Verified Glassdoor Questions
 
-Spoken-style model answers for the verified question bank in [03-interview-questions.md](03-interview-questions.md). Tune phrasing to your own voice, but keep the structure: **direct answer first, then depth, then a trade-off or tie-back to your experience**. Senior loops score structure as much as content.
+Technical practice answers for the historical question bank in [03-interview-questions.md](03-interview-questions.md). These reports do not establish your interview sequence. Your next confirmed interviews assess fit; prioritize the [recruiter answers](01-recruiter-exploratory-call.md) and [manager answers](05-hiring-manager-fit.md), which are tailored to your CV. Describe technical proposals as proposals and claim personal implementation only when accurate.
 
 ## 1. "What happens when I do a search in a browser?" (Senior SWE — verified)
 
@@ -24,7 +24,7 @@ This is a systems-walkthrough probe. The trap is reciting the blog-post meme and
 >
 > If asked "what would you measure?" — server: DNS resolution time, TLS handshake time, TTFB, p99 of the search service; client: FCP and interaction latency. If asked "what breaks first under load?" — the search backend's index and the DB connection pool, before the stateless service tier, because services scale horizontally but stateful tiers need capacity planning.
 
-Tie-back line: "This is the same path I debugged in production relays at Careem — the interesting failures are never in the happy path of the request, they're in DNS caching during failover and TLS re-negotiation storms."
+For a personal connection, use an incident you actually investigated. The CV documents Careem's error classification and retry work, but does not document DNS failover or TLS storms.
 
 ## 2. "Implement a round-robin load balancer" (verified)
 
@@ -84,7 +84,9 @@ Why it's better: with weights A:5, B:1, C:1, naive gives AAAAABC; smooth interle
 
 > The stack is per-goroutine in Go, LIFO, holds frames: locals whose size the compiler knows, return addresses, registers. Allocation is a pointer bump — effectively free; freed on return. The heap is shared, managed by the GC, holds anything that escapes the frame: values returned upward, captured by goroutines, or too large. Go's **escape analysis** decides at compile time, and you can see it with `-gcflags=-m`.
 >
-> Why an engineer cares, not just an OS course: stack allocations are cheap so hot-path structs should be value types; heap allocations cost pointer chasing and GC pressure, so map pre-sizing and reusing buffers with `sync.Pool` are real latency tools. Goroutine stacks start ~8 KB and grow/shrink, which is why a million goroutines is feasible but a million OS threads is not — that's the same memory story as my Telkom monitoring rebuild, where moving hot-path allocations to value semantics cut memory ~80%.
+> Allocation patterns and garbage-collection pressure can affect memory and latency. I would profile the workload before deciding whether pre-sizing collections, reusing buffers, or changing data ownership would help.
+
+Your Telkom monitoring improvement came from the documented stateless architecture, Kubernetes autoscaling, and Go worker-pool concurrency. The CV does not attribute its ~80% memory reduction to value semantics or stack allocation.
 
 If probed on "what's in the heap vs stack for a closure?" — a closure capturing a local forces that local to escape.
 
@@ -116,23 +118,23 @@ If probed on "what's in the heap vs stack for a closure?" — a closure capturin
 
 **"Practical API usage"** — they're testing whether you know the *contracts* you'd build and consume daily. Cover in 60 seconds:
 
-> Pagination (cursor > offset for large, shifting datasets — offsets skip/duplicate rows under writes), idempotency keys for POSTs (client-generated, server dedups — my Careem work ran on this), rate limiting contracts (429 + `Retry-After`), versioning (URL path, additive changes), error shape (RFC 9457 problem+json), and N+1 avoidance on list endpoints (batch + sparse fieldsets). Each one is a thing I've implemented, not read about — the [API design section](../11-api-design/README.md) of my prep site is mine.
+> I would consider pagination behavior under concurrent writes, safe retries for state-changing requests, rate-limit behavior, compatibility, error contracts, and efficient database access. The right design depends on the client and service requirements.
+
+For experience, describe only mechanisms you actually implemented. A study guide topic is not evidence that you shipped that API feature.
 
 ## 8. "Have you used Rakuten Viki before? How would you improve it?" (verified HM question)
 
-Do the homework first: install the app, watch one episode free, one with Pass, note the subtitle UX. Then answer with structure:
+Explore the available product flows first, without needing to purchase a subscription. Then answer with an observation, user impact, and a hypothesis to validate:
 
-> Yes — I've been using it for the last few weeks. Three things stand out. What works: the community subtitling in 200+ languages is genuinely differentiated and the timed-commentary integration feels native. Friction I hit: [pick from your real notes — e.g., discovery of which subtitle languages exist per show; the pass-gating moment where an episode stops mid-scene; playback start time on the web player].
->
-> One improvement I'd want to work on as an engineer: [e.g.,] the pass-gate moment — when a free user hits a locked episode, that's the highest-intent moment in the whole funnel, and the current flow discards that intent. Technically that's an entitlement-check + offer-rendering path that must stay fast (<100 ms) because it's on the playback hot path — the same caching and correctness discipline as the rest of Core Service.
->
-> That's the kind of problem I've owned before: at Careem I rebuilt a regulated event relay where correctness at the hot path was the whole game.
+> I've been exploring Viki as part of my preparation. The Asian-content focus and subtitle community stand out. I'd like to discuss **[one real observation from your exploration]**, understand its user impact, and check whether it is an area the team is already addressing.
 
-Rules: one specific, technically grounded improvement — not a product-manager wish list; and it must be a backend-adjacent problem so the HM sees you doing the job.
+Use this only after actually exploring the product. Do not claim weeks of usage or an observed defect without evidence. The [manager guide](05-hiring-manager-fit.md) includes a product-review approach. Ask about existing metrics and priorities before asserting a bottleneck or prescribing a solution.
 
 ## 9. Relocation pushback (verified — "why would you need more than 2 weeks?")
 
-> Two weeks is doable for the start date if we stage it: I can start remotely or from Singapore in temporary accommodation while the EP application runs in parallel — I understand approval typically takes a few weeks, so starting "in place" before the pass is issued may not be legal; I'd want to confirm that with HR. What I need is not more time, it's the relocation package doing its job: temporary housing and an agency contact. Commuting 2 vs 3 days in month one is fine either way — I'll be in the office as much as onboarding requires.
+> I would plan the start date around my actual notice period, approved work authorization, and the relocation arrangements we agree on. Could you explain your preferred timeline and the support available?
+
+This historical question came from another role. Do not promise a two-week start, remote work approval, or office attendance arrangements that have not been agreed. See the [recruiter logistics preparation](01-recruiter-exploratory-call.md).
 
 Frame: cooperative, concrete, no defensiveness. The question is testing logistics realism, not loyalty.
 

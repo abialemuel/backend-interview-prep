@@ -1,6 +1,6 @@
 # Core Service System Design — Rakuten Viki Loop
 
-This file walks a streaming-backend design you can adapt to whatever prompt the Viki design round opens with ("design our playback service", "design the catalog", "design subtitles delivery"). The structure matters more than the exact domain: clarify requirements, estimate, sketch the read and write paths, then defend the failure modes — that is the senior loop.
+This file is an illustrative streaming-backend design for technical practice. It does not describe Viki's internal architecture or a confirmed interview round. Your next confirmed interviews assess fit; prioritize the [recruiter](01-recruiter-exploratory-call.md) and [hiring-manager](05-hiring-manager-fit.md) preparation. Capacity and architecture choices below are exercise assumptions to clarify with an interviewer.
 
 Deeper material for every topic referenced here lives in [06-system-design](../06-system-design/README.md), [03-databases](../03-databases/mysql/README.md), [10-messaging-and-event-streaming](../10-messaging-and-event-streaming/README.md), and [13-distributed-systems](../13-distributed-systems/README.md).
 
@@ -14,12 +14,12 @@ Requirements worth stating out loud:
 - **Global audience, geo-restricted content**: rights differ per territory; a title available in SG may be blocked in EU.
 - **Two business models**: SVOD (Viki Pass — subscription gating) and AVOD (free with ads). Entitlement checks and ad-serving both touch the hot path.
 - **Latency budget**: playback start is the metric users feel. Manifest + first-segment delivery should be seconds; catalog browse single-digit hundreds of ms.
-- **Community subtitles**: subtitle tracks created/updated continuously by volunteers in 200+ languages; delivery must be cheap and versioned.
+- **Community subtitles**: the supplied JD describes subtitles in over 150 languages. For this exercise, assume continuous community updates and efficient versioned delivery.
 - **Consistency semantics**: entitlement decisions must be *correct enough but fast* — an expired subscriber watching one extra episode is a business cost; blocking paying users is worse. Say this trade-off explicitly; interviewers listen for it.
 
 ## 2. Rough capacity estimate
 
-- 70M registered users, assume 5M DAU, peak concurrency during a popular release ~1–2% of DAU streaming ≈ 50–100k concurrent viewers.
+- Exercise assumption, not a verified Viki metric: 70M registered users, 5M DAU, peak concurrency during a popular release ~1–2% of DAU streaming ≈ 50–100k concurrent viewers.
 - Playback API QPS: each viewer fetches manifest + a handful of API calls per session → a few thousand QPS at peak, bursty at episode drops.
 - Catalog reads: browses dwarf playback; cache hit ratio is the whole game (target >95%).
 - Subtitle files: small (KBs), immutable per version → ideal CDN/edge material.

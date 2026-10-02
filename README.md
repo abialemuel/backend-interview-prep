@@ -76,7 +76,7 @@ backend-interview-prep/
 | 12 | Security & Auth | AppSec, identity | sessions, JWT, OAuth2/OIDC, passkeys, OWASP, Q&A |
 | 13 | Distributed Systems | Theory + practice | consensus, replication, partitioning, locks, retries, Q&A |
 | 14 | AI & LLM | LLM integration | LLM APIs, RAG, vector search, guardrails, cost control, Q&A |
-| 15 | [Rakuten Viki Prep](docs/15-rakuten-viki-senior-engineer-core-service/README.md) | Senior Engineer, Core Service | Interview stages, model answers, salary, and relocation |
+| 15 | [Rakuten Viki Prep](docs/15-rakuten-viki-senior-engineer-core-service/README.md) | Senior Engineer, Core Services | Post-Codility recruiter and hiring-manager fit interviews, CV-based stories, and relocation |
 | 16 | [VSL Global Prep](docs/16-vsl-global-fullstack-genai-engineer/README.md) | Fullstack + GenAI Engineer | CEO and CTO first call, project stories, voice/video pipeline design, and questions to ask |
 
 ## Contributing / Extending
