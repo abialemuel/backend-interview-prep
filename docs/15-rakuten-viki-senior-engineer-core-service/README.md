@@ -2,18 +2,50 @@
 
 Preparation for **Abia Darma Lemuel**, based on **Abia New CV.pdf**, the supplied job description, and the recruiter messages shared on **2 October 2026**.
 
-**Codility: passed.** Your confirmed next interviews are a Talent Acquisition exploratory call and a hiring-manager fit interview. They are progressive: passing the first is required to proceed to the second, and either can come first. Both focus on overall fit. The TA call with **Ler Qi** is **30 minutes**; the hiring-manager duration has not been specified.
+**Codility: passed. Hiring-manager fit interview: passed with positive feedback. Talent Acquisition interview: passed.**
+
+Progress so far:
+
+- Initial screening: full name, notice period, visa status/nationality, salary expectation — **passed**
+- Codility test — **passed**
+- Hiring-manager interview — **passed**, positive feedback
+- Talent Acquisition interview — **passed**
+- Coding interview — **next**
+- Ops interview
+- System Design interview
+- Hiring-manager interview / final discussion
+- Final decision / offer
+
+## Coding interview — next round
+
+~45 minutes, language-agnostic, data structures and algorithms, LeetCode style, **easy/medium** level. Interviewers score how you break down a problem and communicate your thinking, not just the final code.
+
+Practise plan:
+
+1. Re-drill core patterns: arrays/strings, hash maps, two pointers, sliding window, stacks, linked lists, binary search, trees, BFS/DFS, and basic dynamic programming. See [data structures](../07-data-structures-algorithms/01-data-structures-fundamentals.md) and [common patterns](../07-data-structures-algorithms/02-common-patterns.md).
+2. Solve easy/medium LeetCode by pattern until each solve is under ~20 minutes.
+3. Practise out loud: restate the problem, clarify input ranges and edge cases, state the brute-force idea and complexity, then improve. Narrate trade-offs while coding.
+4. Test with edge cases before saying done: empty input, single element, duplicates, negatives, large input.
+5. Language choice is free — pick the one you write fastest (Go or Python).
+
+## Ops interview — after coding
+
+~45 minutes, CS fundamentals plus troubleshooting real-world operational scenarios. Expect "service is slow / erroring — what do you do" style walkthroughs. Practise with the [monitoring and observability guide](../05-devops/datadog/01-observability-and-apm.md), the [messaging guides](../10-messaging-and-event-streaming/README.md), and the database guides in this pack. Structure answers: observe, form hypothesis, check evidence, mitigate, then fix root cause.
 
 ## Start here
 
 | Preparation | What to practise |
 |---|---|
-| [Recruiter exploratory call](01-recruiter-exploratory-call.md) | Introduction, motivation, career history, relocation, compensation, availability, and questions for Ler Qi |
-| [Hiring-manager fit interview](05-hiring-manager-fit.md) | Ownership, engineering judgment, production reliability, project delivery, mentoring, and product fit |
-| [Final rehearsal](06-final-rehearsal.md) | A short study plan, mock interview questions, answer-quality checklist, and notes to prepare |
-| [System design practice](02-system-design.md) | Optional technical depth if they ask how your experience applies to streaming systems |
-| [Historical technical question bank](03-interview-questions.md) | Candidate-reported questions from other hiring processes; these do not establish your interview sequence |
-| [Technical model answers](04-model-answers.md) | Background practice for technical follow-ups; prioritize the fit interviews first |
+| [Data structures fundamentals](../07-data-structures-algorithms/01-data-structures-fundamentals.md) | **Next round: coding.** Core DS + complexity |
+| [Common patterns](../07-data-structures-algorithms/02-common-patterns.md) | **Next round: coding.** LeetCode easy/medium patterns, practise out loud |
+| [Historical technical question bank](03-interview-questions.md) | **Next round: coding.** Candidate-reported coding questions |
+| [Datadog / observability](../05-devops/datadog/01-observability-and-apm.md) | **Next: ops round.** Metrics, logs, traces, troubleshooting flow |
+| [Messaging and event streaming](../10-messaging-and-event-streaming/README.md) | **Next: ops round.** Retries, ordering, queue failure scenarios |
+| [MySQL / PostgreSQL interview questions](../03-databases/mysql/04-interview-questions.md) | **Next: ops round.** Indexes, transactions, slow queries |
+| [System design practice](02-system-design.md) | Later round. Streaming-scale design depth |
+| [Hiring-manager fit interview](05-hiring-manager-fit.md) | **Passed.** Keep stories warm for final discussion |
+| [Talent Acquisition call](01-recruiter-exploratory-call.md) | **Passed.** Compensation notes remain useful for offer stage |
+| [Final rehearsal](06-final-rehearsal.md) | Study plan, mock questions, answer-quality checklist |
 
 ## What Viki and this role need
 
@@ -52,9 +84,7 @@ Keep **Careem AlArabi integration** available for cross-functional delivery and 
 
 ## Compensation and relocation preparation
 
-Your expected salary, notice period, current work location, reason for considering a move, and relocation timeline have not been confirmed in this conversation. Prepare accurate answers; the CV does not establish these logistics.
-
-For compensation, distinguish **monthly SGD base**, **annual base**, and **annual total compensation**. Ask for the role's approved range and package structure before choosing an anchor. The earlier guide's fixed S$10,000–S$11,000 target was not your stated expectation or Viki's confirmed budget.
+Salary expectation, notice period, and visa status were collected at initial screening. At offer stage, distinguish **monthly SGD base**, **annual base**, and **annual total compensation**. Ask for the role's approved range and package structure before choosing an anchor. The earlier guide's fixed S$10,000–S$11,000 target was not your stated expectation or Viki's confirmed budget.
 
 For relocation, ask whether this vacancy supports employer-sponsored Employment Pass applications and what assistance is available. MOM's current eligibility page sets a non-financial-sector minimum of S$5,600 that rises with age, with a higher schedule for new applications from 1 January 2027; COMPASS generally also applies. A salary threshold does not establish your eligibility. The employer can assess the application using MOM's Self-Assessment Tool.
 
@@ -62,7 +92,7 @@ The practical interview answer is a realistic start plan, subject to your notice
 
 ## Confirmed process versus historical reports
 
-The recruiter messages you supplied take priority over candidate reports. Coding, CS fundamentals, and system-design questions in this pack are background practice from other processes, rather than scheduled rounds for your application. Ask Ler Qi what follows the two fit interviews if you progress.
+The recruiter messages, hiring-manager update, and TA emails take priority over candidate reports. Coding (45 min, LeetCode easy/medium, language-agnostic), Ops (45 min, CS fundamentals + troubleshooting), and System Design are confirmed upcoming rounds. The technical packs in this pack are direct preparation for them.
 
 ## References
 
