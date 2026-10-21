@@ -50,7 +50,8 @@ backend-interview-prep/
     ├── 14-ai-llm-integration/         ← LLM APIs, RAG, vector search, production LLM systems
     ├── 15-rakuten-viki-senior-engineer-core-service/ ← Rakuten Viki role preparation
     ├── 16-vsl-global-fullstack-genai-engineer/ ← VSL CEO and CTO interview preparation
-    └── 17-talabat-backend-engineer-hr-interview/ ← Talabat HR and engineering-culture preparation
+    ├── 17-talabat-backend-engineer-hr-interview/ ← Talabat HR and engineering-culture preparation
+    └── 18-geosurge-engineer-hr-interview/ ← geoSurge HR call and AI platform ownership preparation
 ```
 
 ## How to Use
@@ -80,6 +81,7 @@ backend-interview-prep/
 | 15 | [Rakuten Viki Prep](docs/15-rakuten-viki-senior-engineer-core-service/README.md) | Senior Engineer, Core Services | Post-Codility recruiter and hiring-manager fit interviews, CV-based stories, and relocation |
 | 16 | [VSL Global Prep](docs/16-vsl-global-fullstack-genai-engineer/README.md) | Fullstack + GenAI Engineer | CEO and CTO first call, project stories, voice/video pipeline design, and questions to ask |
 | 17 | [Talabat Prep](docs/17-talabat-backend-engineer-hr-interview/README.md) | Backend Engineer HR Interview | Careem domain experience, XP/TDD/pairing culture, ownership, mentoring, and rehearsal |
+| 18 | [geoSurge Prep](docs/18-geosurge-engineer-hr-interview/README.md) | Multi-faceted Engineer HR Call | Company research, AI platform experience, startup ownership, recruiter questions, and rehearsal |
 
 ## Contributing / Extending
 

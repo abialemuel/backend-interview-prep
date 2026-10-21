@@ -32,6 +32,7 @@ Each topic is organized into:
 | [Rakuten Viki / Senior Engineer, Core Services Prep](15-rakuten-viki-senior-engineer-core-service/README.md) | Codility passed: recruiter and hiring-manager fit interviews, CV-based answers, project stories, relocation, and rehearsal |
 | [VSL Global / Fullstack + GenAI Engineer Prep](16-vsl-global-fullstack-genai-engineer/README.md) | CEO and CTO first call, introduction, project stories, voice/video pipeline design, and questions to ask |
 | [Talabat / Backend Engineer HR Interview Prep](17-talabat-backend-engineer-hr-interview/README.md) | CV-based HR answers, Careem delivery-domain stories, XP/TDD/pairing culture, ownership, mentoring, and rehearsal |
+| [geoSurge / Multi-faceted Engineer HR Call Prep](18-geosurge-engineer-hr-interview/README.md) | Company research, tailored HR answers, AI platform and startup stories, recruiter questions, and call notes |
 
 ## Keeping content current
 
